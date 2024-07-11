@@ -6,8 +6,8 @@ import 'package:conass/servicos/api_menu_categoria.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MenuCategoriaBloc implements BlocBase {
-  late ApiMenuHome menuServices;
-  late List<Menu> menus;
+  ApiMenuHome? menuServices;
+  List<Menu> menus = [];
 
   /*
   Criando Stream de saida
@@ -17,7 +17,7 @@ class MenuCategoriaBloc implements BlocBase {
   Stream get outMenu => _postsController.stream;
 
   /* Criando Stream de entrada */
-  final _menuController = BehaviorSubject<int>.seeded(1);
+  final _menuController = BehaviorSubject<int>.seeded(6);
   Sink get inMenu => _menuController.sink;
 
   MenuCategoriaBloc() {
@@ -26,7 +26,7 @@ class MenuCategoriaBloc implements BlocBase {
   }
   void _categoria(int i) async {
     _postsController.sink.add([]);
-    /*menus = await menuServices.getMenu();*/
+    menus = await menuServices!.getMenu();
     _postsController.sink.add(menus);
   }
 

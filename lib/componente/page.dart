@@ -1,8 +1,7 @@
 import 'package:conass/componente/pagina.dart';
 import 'package:conass/servicos/api_get_id.dart';
 import 'package:conass/util/barra_menu.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:html/dom.dart' as dom;
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,7 +26,7 @@ class _PageState extends State<Page> {
     get = ApiGetId();
 
     return Scaffold(
-      appBar: BarraMenu(context, widget.p.title),
+      appBar: BarraMenu(context),
       // drawer: MenuList(),
       body: Center(
         child: SingleChildScrollView(

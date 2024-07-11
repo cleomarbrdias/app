@@ -41,7 +41,9 @@ class CardPost extends StatelessWidget {
                           height: 80,
                           child: Center(
                             child: Text(
-                              post.title.toUpperCase(),
+                              (post.title == null || post.title!.isEmpty)
+                                  ? ''
+                                  : post.title!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'GoogleSans',

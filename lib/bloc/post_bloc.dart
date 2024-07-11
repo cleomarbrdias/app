@@ -11,7 +11,6 @@ class PostsBloc implements BlocBase {
   //declarando meu service API
   Api? postServices;
 
-  //inst
   //anciando uma lista para armazenar meus dados
   List<Post>? posts;
 
@@ -28,10 +27,11 @@ class PostsBloc implements BlocBase {
   PostsBloc() {
     postServices = Api();
     _categoriaController.stream.listen(_categoria);
+    print(_categoriaController);
   }
   void _categoria(int categoria) async {
     if (categoria != null) {
-      print("Entrou na inicialização do blo");
+      print("Entrou na cetoria diferente de null");
       _postsController.sink.add([]);
       posts = await postServices!.getPosts(categoria);
 
@@ -43,6 +43,7 @@ class PostsBloc implements BlocBase {
     } else {
       print("entrou no next pag");
       //posts += await postServices!.nextPage();
+      posts!.addAll(await postServices!.nextPage());
 
       if (posts == null) {
         _postsController.sink.addError(Util.erro);
@@ -50,7 +51,7 @@ class PostsBloc implements BlocBase {
         _postsController.sink.add(posts!);
       }
     }
-    // _postsController.sink.add(posts);
+    _postsController.sink.add(posts!);
   }
 
   @override

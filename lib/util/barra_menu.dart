@@ -6,9 +6,13 @@ import 'package:conass/util/cores.dart';
 import 'package:flutter/material.dart';
 
 // ignore: non_constant_identifier_names
-PreferredSizeWidget BarraMenu(BuildContext context, String title) {
+PreferredSizeWidget BarraMenu(BuildContext context) {
   return AppBar(
-    title: Text(title),
+    //title: Text(title),
+    title: Image.asset(
+      'images/logo-mono.png', // Substitua pelo caminho da sua imagem
+      height: 40, // Ajuste o tamanho da imagem conforme necessário
+    ),
     centerTitle: true,
     elevation: 0,
     //backgroundColor: Color(0xff008979),

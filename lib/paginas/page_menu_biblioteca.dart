@@ -15,7 +15,7 @@ class MenuBiblioteca extends StatelessWidget {
     final blocB = BlocProvider.getBloc<BibliotecaBloc>();
 
     return Scaffold(
-      appBar: BarraMenu(context, "Coleções"),
+      appBar: BarraMenu(context),
       body: StreamBuilder(
         stream: bloc.outMenu,
         builder: (context, AsyncSnapshot snapshot) {

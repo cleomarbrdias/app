@@ -41,14 +41,9 @@ class Pesquisa extends SearchDelegate<String> {
       return Center(
         child: Container(
           child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                "É missão do Conass articular, representar e apoiar as Secretarias Estaduais de Saúde, no âmbito do SUS, promover a disseminação da informação..",
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 20,
-                    fontStyle: FontStyle.italic),
-              )),
+            padding: const EdgeInsets.all(10),
+            child: Image.asset("images/estrela.png"),
+          ),
         ),
       );
     else

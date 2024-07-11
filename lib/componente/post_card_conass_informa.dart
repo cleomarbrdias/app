@@ -15,14 +15,14 @@ class PostCardConassInforma extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*var dt = DateTime.parse(post.data);*/
-    var dt = DateTime.parse(post.data ?? DateTime.now().toIso8601String());
-    print(dt);
+    // var dt = DateTime.parse(post.date ?? DateTime.now().toIso8601String());
+
     var forData = new DateFormat('dd/MM/yyyy');
-    String resData = forData.format(dt);
+    // String resData = forData.format(dt);
 
     /*final bloc = BlocProvider.of<FavoritoBloc>(context);*/
-    final bloc = BlocProvider.getBloc<FavoritoBloc>();
+    //final bloc = BlocProvider.getBloc<FavoritoBloc>();
+
     return Card(
       child: Container(
         margin: const EdgeInsets.all(5),
@@ -32,7 +32,9 @@ class PostCardConassInforma extends StatelessWidget {
               padding: const EdgeInsets.all(5.0),
               child: InkWell(
                   child: Text(
-                    post.title,
+                    (post.title == null || post.title!.isEmpty)
+                        ? ''
+                        : post.title!,
                     style: TextStyle(
                       fontFamily: 'GoogleSans',
                       fontWeight: FontWeight.w500,
@@ -48,48 +50,19 @@ class PostCardConassInforma extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(5.0),
+                  /*
                   child: Text(
                     'Publicado em | ' + resData,
                     textAlign: TextAlign.left,
                     style: TextStyle(fontSize: 9, color: Colors.grey),
                   ),
+*/
                 ),
               ],
             ),
             ButtonTheme(
               child: ButtonBar(
                 children: <Widget>[
-                  StreamBuilder<Map<String, Post>>(
-                    stream: bloc.outFav,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Container(
-                          width: 25,
-                          height: 33,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.fromLTRB(0, 1, 0, 1),
-                            ),
-                            onPressed: () {
-                              bloc.toggleFavorite(post);
-                            },
-                            child: Image.asset(
-                              snapshot.data!.containsKey(post.id)
-                                  ? "images/estrelaBordaP.png"
-                                  : "images/estrelaBorda.png",
-                              width: 25,
-                              height: 25,
-                            ),
-                          ),
-                        );
-                      } else {
-                        return CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Cores.PrimaryVerde),
-                        );
-                      }
-                    },
-                  ),
                   new Container(
                     width: 25,
                     height: 33,
@@ -98,9 +71,11 @@ class PostCardConassInforma extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(0, 1, 0, 1),
                         ),
                         onPressed: () {
+/*
                           Share.share(
                             post.link ?? '',
                           );
+                          */
                         },
                         child: Icon(
                           Icons.share,

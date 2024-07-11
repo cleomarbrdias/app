@@ -22,6 +22,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocProvider(
+      blocs: [
+        Bloc((i) => PesquisasBloc()),
+        Bloc((i) => MenuBloc()),
+        Bloc((i) => PostsBloc()),
+        Bloc((i) => FavoritoBloc()),
+        Bloc((i) => PaginaBloc()),
+        Bloc((i) => BibliotecaBloc()),
+        Bloc((i) => MenuCategoriaBloc()),
+      ],
+      dependencies: [],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
         title: "CONASS",
@@ -30,6 +40,7 @@ class MyApp extends StatelessWidget {
             primary: Color(0xFF008979),
             secondary: Colors.white,
           ),
+          scaffoldBackgroundColor: Colors.white,
           fontFamily: 'GoogleSans',
           textTheme: ThemeData.light().textTheme.copyWith(
                 titleLarge: const TextStyle(
@@ -37,19 +48,21 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'GoogleSans',
                 ),
               ),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Color(0xFF008979), // Fundo do AppBar
+            foregroundColor: Colors.white, // Cor do título e ícones do AppBar
+            iconTheme: IconThemeData(
+              color: Colors.white, // Cor dos ícones
+            ),
+            titleTextStyle: TextStyle(
+              color: Colors.white, // Cor do título
+              fontFamily: 'GoogleSansBold', // Fonte do título
+              fontSize: 20,
+            ),
+          ),
         ),
         home: HomePage(),
       ),
-      blocs: [
-        Bloc((i) => PesquisasBloc()),
-        Bloc((i) => PostsBloc()),
-        Bloc((i) => FavoritoBloc()),
-        Bloc((i) => PaginaBloc()),
-        Bloc((i) => BibliotecaBloc()),
-        Bloc((i) => MenuBloc()),
-        Bloc((i) => MenuCategoriaBloc()),
-      ],
-      dependencies: [],
     );
   }
 }

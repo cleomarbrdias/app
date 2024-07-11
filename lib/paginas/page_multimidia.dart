@@ -9,7 +9,7 @@ class PageMultimidia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BarraMenu(context, "Multimídia"),
+      appBar: BarraMenu(context),
       drawer: MenuList(),
       body: Column(
         children: <Widget>[

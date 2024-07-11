@@ -1,6 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:conass/bloc/biblioteca_bloc.dart';
 import 'package:conass/bloc/post_bloc.dart';
+import 'package:conass/paginas/home_page.dart';
 import 'package:conass/paginas/page_biblioteca.dart';
 import 'package:conass/paginas/page_contato.dart';
 import 'package:conass/paginas/page_multimidia.dart';
@@ -18,28 +19,14 @@ class MenuList extends StatelessWidget {
     return SafeArea(
       child: Container(
         width: 300,
-        color: Cores.PrimaryVerde,
+        color: Cores.VerdeMedio,
         child: ListView(
           children: <Widget>[
             DrawerHeader(
-                child: Container(
-              width: 200,
-              height: 100,
-              decoration: BoxDecoration(
-                image: new DecorationImage(
-                  image: AssetImage("images/logo-mono.png"),
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
+                child: Image.asset(
+              "images/logo-mono.png",
+              height: 40,
             )),
-            /*
-           DrawerHeader(
-              child: Image.asset('images/logo-mono.png'),
-              decoration: BoxDecoration(
-                  //color: Colors.white,
-                  ),
-            ),
-            */
             ExpansionTile(
               trailing: Icon(
                 Icons.keyboard_arrow_down,
@@ -93,8 +80,8 @@ class MenuList extends StatelessWidget {
               onTap: () {
                 pop(context);
                 Util.cat = 6;
-                bloc.inCategoria.add(Util.cat);
-                //pushReplacement(context, HomePage());
+                bloc.inCategoria.add(Util.cat = 6);
+                pushReplacement(context, HomePage());
               },
               title: Text(
                 "NOTICIAS",
@@ -107,9 +94,9 @@ class MenuList extends StatelessWidget {
               onTap: () {
                 pop(context);
 
-                Util.cat = 5;
-                bloc.inCategoria.add(Util.cat);
-                //pushReplacement(context, HomePage());
+                int cat = 5;
+                bloc.inCategoria.add(cat);
+                pushReplacement(context, HomePage());
               },
               title: Text(
                 "CONASS INFORMA",
@@ -212,7 +199,7 @@ class MenuList extends StatelessWidget {
                         pop(context);
                         Util.pagina = 5740;
                         //push(context, PagePagina());
-                        // push(context, PagePagina(5740));
+                        //push(context, PagePagina(5740));
                       },
                       title: Text(
                         "Secretarias Estaduais de Saúde",

@@ -3,7 +3,7 @@ import 'package:conass/servicos/api_get_id.dart';
 import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/cores.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,18 +25,19 @@ class _PaginaState extends State<Pagina> {
   Widget build(BuildContext context) {
     var dt = DateTime.parse(widget.p.data);
     print(dt);
+    print(widget.p);
     var forData = new DateFormat('dd/MM/yyyy');
     String resData = forData.format(dt);
 
     String slug;
     ApiGetId get;
     get = ApiGetId();
-    print("print ebook");
+    print("print ebook =>");
     print(widget.p.linkEbook);
-    print("print pdf");
+    print("print pdf =>");
     print(widget.p.linkPdf);
     return Scaffold(
-      appBar: BarraMenu(context, widget.p.title),
+      appBar: BarraMenu(context),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -49,95 +50,26 @@ class _PaginaState extends State<Pagina> {
                   style: TextStyle(
                     fontFamily: 'GoogleSansBold',
                     fontSize: fsize,
-                    color: Colors.black54,
+                    color: Colors.black,
                   ),
                 ),
               ),
-
-              /*
-              Html(
-                data: widget.p.materia,
-                padding: EdgeInsets.all(11),
-                linkStyle: const TextStyle(
-                  color: Cores.PrimaryVerde,
-
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: HtmlWidget(
+                        widget.p.materia,
+                      ),
+                    ),
+                  ],
                 ),
-                onLinkTap: (url) async {
-
-                  if (url.contains("www.conass.org.br")) {
-                    print("Url é do conass");
-                    if (url.contains("biblioteca/download")) {
-                      print("Entrou em Biblitoteca");
-                      _launchURL(url);
-                    } else if (url.contains("category")) {
-                      push(context, ViewPage(url));
-                    } else if (url.contains("uploads") ||
-                        url.contains("/pdf/") ||
-                        url.contains("/eBook/")) {
-                      print("Verificando arquivo: $url");
-                      _launchURL(url);
-                    } else {
-                      slug = url
-                          .replaceAll('https://www.conass.org.br', '')
-                          .replaceAll('/', '');
-
-                      final int res = await get.getId(slug);
-
-                      if (res != null) {
-                        Util.pagina = res;
-                        push(context, PagePagina());
-                      }
-                    }
-                  } else {
-                    print("Link não é do CONASS");
-
-                    push(context, ViewPage(url));
-                  }
-                },
-                onImageTap: (src) {
-                  print("Verificando SRC: $src");
-                  _mostraImagem(context, src);
-                },
-                customRender: (node, children) {
-                  if (node is dom.Element) {
-                    switch (node.localName) {
-                      case "custom_tag":
-                        return Column(children: children);
-                    }
-                  }
-                  return null;
-                },
-                customTextAlign: (dom.Node node) {
-                  if (node is dom.Element) {
-                    switch (node.localName) {
-                      case "p":
-                        return TextAlign.justify;
-                    }
-                  }
-                  return null;
-                },
-                customTextStyle: (dom.Node node, TextStyle baseStyle) {
-                  if (node is dom.Element) {
-                    switch (node.localName) {
-                      case "p":
-                        return baseStyle.merge(TextStyle(
-                          height: 1.4,
-                          fontSize: fsize,
-                          color: Colors.black54
-                        ));
-                    }
-                  }
-                  return baseStyle;
-                },
-
-
               ),
-*/
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  widget.p.linkPdf != " " && widget.p.linkPdf != null
+                  widget.p.linkPdf != "" && widget.p.linkPdf != null
                       ? Container(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -162,7 +94,7 @@ class _PaginaState extends State<Pagina> {
                           ),
                         )
                       : SizedBox.shrink(),
-                  widget.p.linkEbook != " " && widget.p.linkEbook != null
+                  widget.p.linkEbook != "" && widget.p.linkEbook != null
                       ? Container(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(

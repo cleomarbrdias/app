@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 class ApiBiblioteca {
   Future<List<Post>?> getPosts(int categoria) async {
     try {
-      http.Response response = await http.get(
-          "https://www.conass.org.br/biblioteca/wp-json/wp/v2/posts?categories=$categoria&per_page=99"
-              as Uri);
+      Uri url = Uri.parse(
+          "https://www.conass.org.br/biblioteca/wp-json/wp/v2/posts?categories=$categoria&per_page=99");
+      http.Response response = await http.get(url);
 
       return decode(response);
     } catch (error) {

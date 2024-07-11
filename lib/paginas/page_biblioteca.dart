@@ -7,7 +7,7 @@ import 'package:conass/paginas/page_menu_biblioteca.dart';
 import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/connectionStatusSingleton.dart';
 import 'package:conass/util/cores.dart';
-import 'package:conass/util/menu_list.dart';
+import 'package:conass/util/menu.dart';
 import 'package:conass/util/push.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,7 +46,7 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
     final bloc = BlocProvider.getBloc<BibliotecaBloc>();
 
     return Scaffold(
-      appBar: BarraMenu(context, "Biblioteca"),
+      appBar: BarraMenu(context),
       bottomNavigationBar: rodape(),
       drawer: MenuList(),
       body: StreamBuilder(

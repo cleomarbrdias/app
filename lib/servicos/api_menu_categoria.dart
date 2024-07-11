@@ -5,14 +5,15 @@ import 'package:conass/util/util.dart';
 import 'package:http/http.dart' as http;
 
 class ApiMenuHome {
-  Future<Object> getMenu() async {
+  Future<List<Menu>> getMenu() async {
     try {
-      http.Response response = await http
-          .get("https://www.conass.org.br/wp-json/menuapp/menu" as Uri);
+      Uri url = Uri.parse("https://www.conass.org.br/wp-json/menuapp/menu");
+      http.Response response = await http.get(url);
 
       return decode(response);
     } catch (error) {
-      return error;
+      Util.erro = "Erro ao estabelecer conexão, tente mais tarde!!";
+      throw Exception(Util.erro); // Adicione um throw para retornar exceção
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/buttonIcon.dart';
-import 'package:conass/util/menu_list.dart';
+import 'package:conass/util/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,7 +8,7 @@ class PageContato extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BarraMenu(context, "Contato"),
+      appBar: BarraMenu(context),
       drawer: MenuList(),
       body: Column(
         children: <Widget>[
