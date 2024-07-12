@@ -4,7 +4,6 @@ import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/cores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,7 +47,7 @@ class _PaginaState extends State<Pagina> {
                   widget.p.title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: 'GoogleSansBold',
+                    fontFamily: 'GoogleSansMedium',
                     fontSize: fsize,
                     color: Colors.black,
                   ),
@@ -61,6 +60,10 @@ class _PaginaState extends State<Pagina> {
                       padding: const EdgeInsets.all(20),
                       child: HtmlWidget(
                         widget.p.materia,
+                        textStyle: TextStyle(
+                          fontFamily: 'GoogleSans',
+                          fontSize: fsize,
+                        ),
                       ),
                     ),
                   ],
@@ -141,7 +144,7 @@ class _PaginaState extends State<Pagina> {
               mini: true,
               heroTag: "btn1",
               child: Text("A+"),
-              backgroundColor: Cores.PrimaryLaranja,
+              backgroundColor: Cores.LaranjaEscuro,
               onPressed: () {
                 setState(() {
                   if (fsize < 25) {
@@ -157,7 +160,7 @@ class _PaginaState extends State<Pagina> {
               mini: true,
               heroTag: "btn2",
               child: Text("A-"),
-              backgroundColor: Cores.PrimaryLaranja,
+              backgroundColor: Cores.LaranjaClaro,
               onPressed: () {
                 setState(() {
                   if (fsize > 15) {

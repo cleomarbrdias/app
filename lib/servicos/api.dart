@@ -10,7 +10,6 @@ class Api {
   int _page = 1;
   int? categoria;
 
-  @override
   Future<List<Post>> getPosts(int categoria) async {
     try {
       _page = 1;
@@ -29,7 +28,6 @@ class Api {
     }
   }
 
-  @override
   Future<List<Post>> nextPage() async {
     _page++;
 
@@ -49,7 +47,6 @@ class Api {
     }
   }
 
-  @override
   Future<List<Post>> getSearch(String pesquisa) async {
     try {
       _page = 1;
@@ -64,7 +61,6 @@ class Api {
     }
   }
 
-  @override
   Future<List<Post>> getSearchNext() async {
     try {
       _page++;

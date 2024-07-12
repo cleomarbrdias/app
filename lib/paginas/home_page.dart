@@ -4,7 +4,6 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:conass/bloc/menu_home_bloc.dart';
 import 'package:conass/bloc/post_bloc.dart';
 import 'package:conass/componente/post_card.dart';
-import 'package:conass/componente/post_card_conass_informa.dart';
 import 'package:conass/modelo/menu.dart';
 import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/connectionStatusSingleton.dart';
@@ -53,18 +52,22 @@ class _HomePageState extends State<HomePage> {
     ]);
 
     final bloc = BlocProvider.getBloc<PostsBloc>();
-/*
-    isOffline
-        ? _scaffoldKey.currentState.showSnackBar(SnackBar(
+
+    if (isOffline) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
             content: Text(
-              "Sem Conexão",
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              "Parece que você está offline. Verifique sua conexão com a internet e tente novamente.",
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
-            backgroundColor: Cores.PrimaryVerde,
+            backgroundColor: Cores.LaranjaEscuro,
             duration: Duration(seconds: 3),
-          ))
-        : SizedBox.shrink();
-*/
+          ),
+        );
+      });
+    }
+
     return Scaffold(
         key: _scaffoldKey,
         appBar: BarraMenu(context),
@@ -86,27 +89,27 @@ class _HomePageState extends State<HomePage> {
                 return Center(
                   child: CircularProgressIndicator(
                     valueColor:
-                        AlwaysStoppedAnimation<Color>(Cores.PrimaryVerde),
+                        AlwaysStoppedAnimation<Color>(Cores.LaranjaEscuro),
                   ),
                 );
               } else if (snapshot.hasData) {
+                print(snapshot.data);
                 return ListView.builder(
                   itemBuilder: (context, index) {
                     if (index < snapshot.data.length) {
-                      ScrollController scrollController = ScrollController();
                       return PostCard(
                         snapshot.data[index],
-                        scrollController: scrollController,
                       );
                     } else if (index > 1) {
+                      print(index);
                       bloc.inCategoria.add(null);
                       return Container(
                         height: 40,
                         width: 40,
                         alignment: Alignment.center,
                         child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Cores.PrimaryVerde),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Cores.LaranjaEscuro),
                         ),
                       );
                     } else {
@@ -171,8 +174,8 @@ class _HomePageState extends State<HomePage> {
                                 Radius.circular(3),
                               )),
                               backgroundColor: menu.id == Util.cat
-                                  ? Cores.PrimaryLaranja
-                                  : Cores.PrimaryVerde,
+                                  ? Cores.LaranjaEscuro
+                                  : Cores.VerdeMedio,
                               label: Text(
                                 menu.slug,
                                 style: TextStyle(color: Colors.white),
@@ -184,6 +187,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
 /*
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);

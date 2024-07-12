@@ -12,7 +12,7 @@ class PostsBloc implements BlocBase {
   Api? postServices;
 
   //anciando uma lista para armazenar meus dados
-  List<Post>? posts;
+  List<Post> posts = [];
 
   //criando controles de saida de saida final _categoriaController = BehaviorSubject<int>(seedValue: 6);
   final BehaviorSubject<List<Post>> _postsController =
@@ -21,15 +21,16 @@ class PostsBloc implements BlocBase {
   Stream get outPosts => _postsController.stream;
 
   //criando controles de entrada
-  final _categoriaController = BehaviorSubject<int>.seeded(6);
-  Sink get inCategoria => _categoriaController.sink;
+  final BehaviorSubject<int?> _categoriaController =
+      BehaviorSubject<int?>.seeded(6);
+  Sink<int?> get inCategoria => _categoriaController.sink;
 
   PostsBloc() {
     postServices = Api();
     _categoriaController.stream.listen(_categoria);
     print(_categoriaController);
   }
-  void _categoria(int categoria) async {
+  void _categoria(int? categoria) async {
     if (categoria != null) {
       print("Entrou na cetoria diferente de null");
       _postsController.sink.add([]);
@@ -38,20 +39,22 @@ class PostsBloc implements BlocBase {
       if (posts == null) {
         _postsController.sink.addError(Util.erro);
       } else {
-        _postsController.sink.add(posts!);
+        _postsController.sink.add(posts);
       }
     } else {
       print("entrou no next pag");
-      //posts += await postServices!.nextPage();
-      posts!.addAll(await postServices!.nextPage());
+      final NewPosts = await postServices!.nextPage();
+      posts += NewPosts;
+
+      //posts!.addAll(await postServices!.nextPage());
 
       if (posts == null) {
         _postsController.sink.addError(Util.erro);
       } else {
-        _postsController.sink.add(posts!);
+        _postsController.sink.add(posts);
       }
     }
-    _postsController.sink.add(posts!);
+    _postsController.sink.add(posts);
   }
 
   @override

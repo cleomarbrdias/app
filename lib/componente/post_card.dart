@@ -13,11 +13,11 @@ import 'dart:io';
 
 class PostCard extends StatelessWidget {
   final Post post;
-  PostCard(this.post, {required ScrollController scrollController});
+  PostCard(this.post);
 
   @override
   Widget build(BuildContext context) {
-    print("Entrou no postCard - Normal");
+    //print("Entrou no postCard - Normal");
 
     var dt = DateTime.parse(post.data ?? DateTime.now().toIso8601String());
     var forData = new DateFormat('dd/MM/yyyy');
@@ -109,7 +109,9 @@ class PostCard extends StatelessWidget {
                   child: Text(
                     'Publicado em | ' + resData,
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 9, color: Colors.grey),
+                    style: TextStyle(
+                        fontSize: 9,
+                        color: const Color.fromARGB(255, 102, 102, 102)),
                   ),
                 ),
               ],
@@ -137,7 +139,7 @@ class PostCard extends StatelessWidget {
                           },
                           child: Icon(
                             Icons.share,
-                            color: Cores.PrimaryVerde,
+                            color: Cores.VerdeMedio,
                           ),
                         )
                       : ElevatedButton(
@@ -154,7 +156,7 @@ class PostCard extends StatelessWidget {
                           },
                           child: Icon(
                             Icons.share,
-                            color: Cores.PrimaryVerde,
+                            color: Cores.VerdeMedio,
                           ),
                         ),
                 ),
@@ -168,7 +170,7 @@ class PostCard extends StatelessWidget {
                             borderRadius: BorderRadius.all(
                           Radius.circular(3),
                         )),
-                        backgroundColor: Cores.PrimaryVerde,
+                        backgroundColor: Cores.VerdeMedio,
                         label: Text(
                           "Leia Mais",
                           style: TextStyle(color: Colors.white),

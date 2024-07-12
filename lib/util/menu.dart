@@ -19,14 +19,25 @@ class MenuList extends StatelessWidget {
     return SafeArea(
       child: Container(
         width: 300,
-        color: Cores.VerdeMedio,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Cores.VerdeEscuro, Cores.VerdeMedio],
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+          ),
+          borderRadius:
+              BorderRadius.circular(10), // Se desejar cantos arredondados
+        ),
         child: ListView(
           children: <Widget>[
-            DrawerHeader(
-                child: Image.asset(
-              "images/logo-mono.png",
-              height: 40,
-            )),
+            SizedBox(
+              height: 100,
+              child: DrawerHeader(
+                  child: Image.asset(
+                "images/logo-mono.png",
+                height: 20,
+              )),
+            ),
             ExpansionTile(
               trailing: Icon(
                 Icons.keyboard_arrow_down,

@@ -9,6 +9,7 @@ import 'package:conass/bloc/post_bloc.dart';
 import 'package:conass/paginas/home_page.dart';
 import 'package:conass/util/connectionStatusSingleton.dart';
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
 void main() {
   ConnectionStatusSingleton connectionStatus =
