@@ -2,7 +2,9 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:conass/bloc/favorito_bloc.dart';
 import 'package:conass/delegates/pesquisa.dart';
 import 'package:conass/modelo/post.dart';
+import 'package:conass/paginas/page_pesquisa.dart';
 import 'package:conass/util/cores.dart';
+import 'package:conass/util/push.dart';
 import 'package:flutter/material.dart';
 
 // ignore: non_constant_identifier_names
@@ -55,5 +57,5 @@ PreferredSizeWidget BarraMenu(BuildContext context) {
 }
 
 _onClickPesquisa(BuildContext context, String result) {
-  // push(context, HomePesquisa(result));
+  push(context, HomePesquisa(result));
 }

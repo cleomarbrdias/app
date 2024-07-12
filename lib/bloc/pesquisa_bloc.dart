@@ -9,10 +9,10 @@ import 'package:rxdart/subjects.dart';
 
 class PesquisasBloc implements BlocBase {
   //declarando meu service API
-  late Api api;
+  Api? api;
 
   //instanciando uma lista para armazenar meus dados
-  late List<Post> posts;
+  List<Post> posts = [];
 
   //criando controles de saida de saida
   final BehaviorSubject<List<Post>> _postsController =
@@ -31,7 +31,7 @@ class PesquisasBloc implements BlocBase {
   void _pesquisa(String pesquisa) async {
     if (pesquisa != null) {
       _postsController.sink.add([]);
-      posts = await api.getSearch(pesquisa);
+      posts = await api!.getSearch(pesquisa);
 
       if (posts == null) {
         _postsController.sink.addError(Util.erro);
@@ -39,7 +39,7 @@ class PesquisasBloc implements BlocBase {
         _postsController.sink.add(posts);
       }
     } else {
-      posts += await api.getSearchNext();
+      posts += await api!.getSearchNext();
 
       if (posts == null) {
         _postsController.sink.addError(Util.erro);

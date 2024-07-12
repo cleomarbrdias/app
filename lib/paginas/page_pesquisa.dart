@@ -1,8 +1,13 @@
 import 'dart:async';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:conass/bloc/pesquisa_bloc.dart';
+import 'package:conass/componente/post_card.dart';
+import 'package:conass/util/barra_menu.dart';
+import 'package:conass/util/connectionStatusSingleton.dart';
+import 'package:conass/util/cores.dart';
+import 'package:conass/util/util.dart';
 import 'package:flutter/material.dart';
-/*
+
 // ignore: must_be_immutable
 class HomePesquisa extends StatefulWidget {
   String result;
@@ -39,27 +44,32 @@ class _HomePesquisaState extends State<HomePesquisa> {
 
   @override
   Widget build(BuildContext context) {
-
-    final bloc = BlocProvider.of<PesquisasBloc>(context);
+    final bloc = BlocProvider.getBloc<PesquisasBloc>();
 
     if (widget.result != null) {
       bloc.inPesquisa.add(widget.result);
     }
 
-    isOffline
-        ? _scaffoldKey.currentState?showSnackBar(SnackBar(
+    if (isOffline) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
             content: Text(
-              "Sem Conexão",
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              "Parece que você está offline. Verifique sua conexão com a internet e tente novamente.",
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
-            backgroundColor: Color(0xff008979),
+            backgroundColor: Cores.LaranjaEscuro,
             duration: Duration(seconds: 3),
-          ))
-        : SizedBox.shrink();
+          ),
+        );
+      });
+    }
 
     return Scaffold(
         key: _scaffoldKey,
-        appBar: BarraMenu(context, "Pesquisar"),
+        appBar: BarraMenu(
+          context,
+        ),
         /*    title: Container(
           child: Text("Pesquisar"),
         ),
@@ -122,16 +132,19 @@ class _HomePesquisaState extends State<HomePesquisa> {
                 return ListView.builder(
                   itemBuilder: (context, index) {
                     if (index < snapshot.data.length) {
-                      return PostCard(snapshot.data[index]);
+                      return PostCard(
+                        snapshot.data[index],
+                      );
                     } else if (index > 1) {
+                      print(index);
                       bloc.inPesquisa.add(null);
                       return Container(
                         height: 40,
                         width: 40,
                         alignment: Alignment.center,
                         child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Color(0xff008979)),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Cores.LaranjaEscuro),
                         ),
                       );
                     } else {
@@ -148,7 +161,4 @@ class _HomePesquisaState extends State<HomePesquisa> {
                 );
             }));
   }
-
 }
-
-*/

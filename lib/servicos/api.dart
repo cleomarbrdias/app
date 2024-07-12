@@ -52,8 +52,9 @@ class Api {
       _page = 1;
       _pesquisa = pesquisa;
 
-      http.Response response = await http.get(Uri.parse(
-          "https://www.conass.org.br/wp-json/wp/v2/posts?search=$pesquisa"));
+      Uri url = Uri.parse(
+          "https://www.conass.org.br/wp-json/wp/v2/posts?search=$pesquisa");
+      http.Response response = await http.get(url);
       return decode(response);
     } catch (error) {
       print("Erro na busca: $error");

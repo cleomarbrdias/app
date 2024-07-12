@@ -84,16 +84,18 @@ class Pesquisa extends SearchDelegate<String> {
 
   Future<List> suggestions(String search) async {
     //sugestoes de pesquisa realizada pelo API da Goggle
-    http.Response response = await http.get(
-        "http://suggestqueries.google.com/complete/search?q=$search&client=chrome"
-            as Uri);
+
+    Uri url = Uri.parse(
+        "http://suggestqueries.google.com/complete/search?q=$search&client=chrome");
+
+    http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {
       return json.decode(response.body)[1].map((result) {
         return result;
       }).toList();
     } else {
-      throw Exception("Falha ao carregar sugestões de pesquisa");
+      throw Exception('Falha ao carregar sugestões de pesquisa');
     }
   }
 }
