@@ -6,6 +6,7 @@ import 'package:conass/bloc/menu_home_bloc.dart';
 import 'package:conass/bloc/pagina_bloc.dart';
 import 'package:conass/bloc/pesquisa_bloc.dart';
 import 'package:conass/bloc/post_bloc.dart';
+import 'package:conass/bloc/post_secretarios_bloc.dart';
 import 'package:conass/paginas/home_page.dart';
 import 'package:conass/util/connectionStatusSingleton.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         Bloc((i) => PaginaBloc()),
         Bloc((i) => BibliotecaBloc()),
         Bloc((i) => MenuCategoriaBloc()),
+        Bloc((i) => PostSecretariosBloc()),
       ],
       dependencies: [],
       child: MaterialApp(

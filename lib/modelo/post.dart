@@ -86,7 +86,7 @@ class Post {
         categoriaList.isNotEmpty ? categoriaList.first : null;
 
     return Post(
-      id: json["id"] ?? json["postId"],
+      id: json["id"] ?? json["id"],
       title: resTitle.isNotEmpty ? resTitle : (json["title"] ?? ''),
       data: json["date"] ?? '',
       resumo: resResumo,
@@ -102,7 +102,7 @@ class Post {
 
   Map<String, dynamic> toJson() {
     return {
-      "postId": id,
+      "id": id,
       "title": title,
       "data": data,
       "resumo": resumo,

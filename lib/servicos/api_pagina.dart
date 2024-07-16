@@ -28,7 +28,7 @@ class ApiPagina {
 
       return Container(
         child: Center(
-          child: Text("Coorriginar apresentação de pagina."),
+          child: Text("CArregando apresentação de pagina."),
         ),
       );
     } else if (response.statusCode == 404) {
