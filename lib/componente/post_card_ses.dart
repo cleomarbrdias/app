@@ -19,7 +19,8 @@ class PostCardSes extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Center(
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(0.0),
                   child: FadeInImage.memoryNetwork(
                     fit: BoxFit.cover,
                     width: 50,
@@ -31,6 +32,7 @@ class PostCardSes extends StatelessWidget {
                 Text(
                   post.estado ?? '',
                   style: TextStyle(
+                    fontFamily: 'GoogleSans',
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -38,16 +40,20 @@ class PostCardSes extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            FadeInImage.memoryNetwork(
-              fit: BoxFit.cover,
-              width: double.infinity,
-              placeholder: kTransparentImage,
-              image: post.foto_secretario,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: FadeInImage.memoryNetwork(
+                fit: BoxFit.cover,
+                width: double.infinity,
+                placeholder: kTransparentImage,
+                image: post.imageDestaque,
+              ),
             ),
             SizedBox(height: 10),
             Text(
               post.nome_do_secretario ?? '',
               style: TextStyle(
+                fontFamily: 'GoogleSans',
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -140,9 +146,15 @@ class PostCardSes extends StatelessWidget {
               },
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.picture_as_pdf),
+                  Icon(
+                    Icons.picture_as_pdf,
+                    color: Cores.LaranjaClaro,
+                  ),
                   SizedBox(width: 10),
-                  Text('Plano estadual de Saúde'),
+                  Text(
+                    'Plano estadual de Saúde',
+                    style: TextStyle(color: Cores.LaranjaClaro),
+                  ),
                 ],
               ),
             ),
@@ -158,9 +170,15 @@ class PostCardSes extends StatelessWidget {
               },
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.picture_as_pdf),
+                  Icon(
+                    Icons.picture_as_pdf,
+                    color: Cores.LaranjaClaro,
+                  ),
                   SizedBox(width: 10),
-                  Text('Mapa Estratégico da SES'),
+                  Text(
+                    'Mapa Estratégico da SES',
+                    style: TextStyle(color: Cores.LaranjaClaro),
+                  ),
                 ],
               ),
             ),

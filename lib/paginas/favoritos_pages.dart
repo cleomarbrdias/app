@@ -11,6 +11,7 @@ class Favoritos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.getBloc<FavoritoBloc>();
+    print("Pagina Favoritos");
 
     return Scaffold(
       appBar: AppBar(

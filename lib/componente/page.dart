@@ -24,7 +24,7 @@ class _PageState extends State<Page> {
     String slug;
     ApiGetId get;
     get = ApiGetId();
-
+    print("Entrou no componente page");
     return Scaffold(
       appBar: BarraMenu(context),
       // drawer: MenuList(),

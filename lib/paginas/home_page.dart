@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:conass/bloc/menu_home_bloc.dart';
 import 'package:conass/bloc/post_bloc.dart';
@@ -9,6 +9,8 @@ import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/connectionStatusSingleton.dart';
 import 'package:conass/util/cores.dart';
 import 'package:conass/util/menu.dart';
+import 'package:conass/util/push.dart';
+import 'package:conass/util/rodape.dart';
 import 'package:conass/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,8 +73,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: BarraMenu(context),
-        bottomNavigationBar: Rodape(),
         drawer: MenuList(),
+        //bottomNavigationBar: Rodape(),
+        bottomNavigationBar: Rodape(),
         body: StreamBuilder(
             stream: bloc.outPosts,
             builder: (context, snapshot) {
@@ -127,8 +130,8 @@ class _HomePageState extends State<HomePage> {
               }
             }));
   }
-
-  Rodape() {
+/*
+  Rodape1() {
     final menubloc = BlocProvider.getBloc<MenuCategoriaBloc>();
     final bloc = BlocProvider.getBloc<PostsBloc>();
     return Container(
@@ -186,6 +189,8 @@ class _HomePageState extends State<HomePage> {
           }),
     );
   }
+
+  */
 }
 
 

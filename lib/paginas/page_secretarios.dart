@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:conass/bloc/post_secretarios_bloc.dart';
+import 'package:conass/componente/post_card_gestores.dart';
 import 'package:conass/componente/post_card_ses.dart';
 import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/connectionStatusSingleton.dart';
 import 'package:conass/util/cores.dart';
 import 'package:conass/util/menu.dart';
+import 'package:conass/util/rodape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -48,7 +50,7 @@ class _PageSecretariosState extends State<PageSecretarios> {
     ]);
 
     final bloc = BlocProvider.getBloc<PostSecretariosBloc>();
-
+    print("Pagina Secretarios");
     if (isOffline) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -68,6 +70,7 @@ class _PageSecretariosState extends State<PageSecretarios> {
         key: _scaffoldKey,
         appBar: BarraMenu(context),
         drawer: MenuList(),
+        bottomNavigationBar: Rodape(),
         body: StreamBuilder(
             stream: bloc.outPosts,
             builder: (context, snapshot) {
@@ -96,35 +99,27 @@ class _PageSecretariosState extends State<PageSecretarios> {
                       return Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Text(
-                          "Acesse as informações das Secretarias Estaduais da Saúde (SES) e conheça os atuais gestores, contatos e documentos importantes, como os Planos Estaduais de Saúde e os Mapas Estratégicos das SES.",
+                          'Secretarias Estaduais'.toUpperCase(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Cores.LaranjaClaro,
                           ),
                         ),
                       );
-                    } else if (index < snapshot.data.length) {
-                      return PostCardSes(
-                        snapshot.data[index],
-                      );
-                    } else if (index > 1) {
-                      print(index);
-                      //bloc.inCategoria.add(null);
-                      // return Container(
-                      //   height: 40,
-                      //   width: 40,
-                      //   alignment: Alignment.center,
-                      //   child: CircularProgressIndicator(
-                      //     valueColor: AlwaysStoppedAnimation<Color>(
-                      //         Cores.LaranjaEscuro),
-                      //   ),
-                      // );
                     } else {
-                      return Center(
-                        child: Text("erro"),
-                      );
+                      // Corrigir o índice para o snapshot.data
+                      int dataIndex = index - 1;
+                      if (dataIndex < snapshot.data.length) {
+                        return PostCardGestores(
+                          snapshot.data[dataIndex],
+                        );
+                      } else {
+                        return Center(
+                          child: Text("erro"),
+                        );
+                      }
                     }
                   },
                   itemCount: snapshot.data.length + 1,

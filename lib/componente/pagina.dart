@@ -15,6 +15,8 @@ class Pagina extends StatefulWidget {
 
   const Pagina(this.post);
   get p => post;
+
+  static fromJson(Map<String, dynamic> pagMap) {}
 }
 
 class _PaginaState extends State<Pagina> {
@@ -25,6 +27,7 @@ class _PaginaState extends State<Pagina> {
     var dt = DateTime.parse(widget.p.data);
     print(dt);
     print(widget.p);
+    print("Entrou no componente pagina");
     var forData = new DateFormat('dd/MM/yyyy');
     String resData = forData.format(dt);
 
@@ -35,6 +38,7 @@ class _PaginaState extends State<Pagina> {
     print(widget.p.linkEbook);
     print("print pdf =>");
     print(widget.p.linkPdf);
+    print("entrou na Pagina no Post");
     return Scaffold(
       appBar: BarraMenu(context),
       body: Center(
@@ -49,7 +53,17 @@ class _PaginaState extends State<Pagina> {
                   style: TextStyle(
                     fontFamily: 'GoogleSansMedium',
                     fontSize: fsize,
-                    color: Colors.black,
+                    color: Cores.PrimaryLaranja,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(
+                  'Publicado em | ' + resData,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.grey,
                   ),
                 ),
               ),
@@ -123,14 +137,6 @@ class _PaginaState extends State<Pagina> {
                         )
                       : SizedBox.shrink(),
                 ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Text(
-                  'Publicado em | ' + resData,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(color: Colors.grey),
-                ),
               ),
               SizedBox(height: 70),
             ],

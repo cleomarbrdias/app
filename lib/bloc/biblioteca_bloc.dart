@@ -41,17 +41,17 @@ class BibliotecaBloc implements BlocBase {
   }
 
   @override
-  void addListener(VoidCallback listener) {
-    // TODO: implement addListener
-  }
-
-  @override
   // TODO: implement hasListeners
   bool get hasListeners => throw UnimplementedError();
 
   @override
   void notifyListeners() {
     // TODO: implement notifyListeners
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    // TODO: implement addListener
   }
 
   @override

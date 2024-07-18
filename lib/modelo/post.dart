@@ -9,7 +9,7 @@ class Post {
   String? linkPdf;
   String? linkEbook;
   final String data;
-  int? categoria;
+  String? categoria;
 
   Post({
     this.id,
@@ -81,8 +81,9 @@ class Post {
     final String linkEbook =
         json["acf"] != null ? (json["acf"]["linkEbook"] as String? ?? '') : '';
 */
-    final List<int> categoriaList = List<int>.from(json["categories"] ?? []);
-    final int? firstCategoria =
+    final List<String> categoriaList =
+        List<String>.from(json["nomeCategoria"] ?? []);
+    final String? firstCategoria =
         categoriaList.isNotEmpty ? categoriaList.first : null;
 
     return Post(

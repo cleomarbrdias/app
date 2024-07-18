@@ -1,5 +1,3 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:conass/bloc/favorito_bloc.dart';
 import 'package:conass/componente/pagina.dart';
 import 'package:conass/modelo/post.dart';
 import 'package:conass/util/cores.dart';
@@ -39,7 +37,7 @@ class PostCard extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -88,7 +86,6 @@ class PostCard extends StatelessWidget {
                                 bottomLeft: const Radius.circular(3.0),
                                 bottomRight: const Radius.circular(3.0)),
                           ),
-                          width: 50,
                           height: 20,
                           child: Padding(
                             padding: EdgeInsets.only(
@@ -148,7 +145,7 @@ class PostCard extends StatelessWidget {
                             backgroundColor: Colors.transparent,
                             elevation: 0, // Remove a sombra
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3),
+                              borderRadius: BorderRadius.circular(10),
                             ), // Cor de fundo transparente
                           ),
                           onPressed: () {
@@ -168,7 +165,7 @@ class PostCard extends StatelessWidget {
                     child: Chip(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                          Radius.circular(3),
+                          Radius.circular(10),
                         )),
                         backgroundColor: Cores.VerdeMedio,
                         label: Text(

@@ -1,23 +1,21 @@
 import 'dart:convert';
-import 'package:conass/modelo/post_secretarios.dart';
+
+import 'package:conass/modelo/camaras_tecnicas.dart';
 import 'package:conass/util/util.dart';
 import 'package:http/http.dart' as http;
 
-class ApiGetSecretarios {
+class ApiCamarasTecnicas {
   String? _categoria;
-  String? _pesquisa;
-  int _page = 1;
-  int? categoria;
 
-  Future<List<PostSecretarios>> getPostsSes(String categoria) async {
+  Future<List<CamarasTecnicas>> getPostsCamarasTecnicas(
+      String categoria) async {
     try {
-      _page = 1;
       _categoria = categoria;
 
-      print("Categoria $categoria");
+      print("API Categoria => $categoria");
 
       Uri url = Uri.parse(
-          "https://www.conass.org.br/wp-json/wp/v2/$categoria/?per_page=30&orderby=slug&order=asc");
+          "https://www.conass.org.br/wp-json/wp/v2/$categoria?per_page=100");
       http.Response response = await http.get(url);
       //&orderby=name&order=asc
       return decode(response);
@@ -27,12 +25,12 @@ class ApiGetSecretarios {
     }
   }
 
-  List<PostSecretarios> decode(http.Response response) {
+  List<CamarasTecnicas> decode(http.Response response) {
     if (response.statusCode == 200) {
       var decoded = json.decode(response.body);
-
-      List<PostSecretarios> posts = decoded.map<PostSecretarios>((map) {
-        return PostSecretarios.fromJson(map);
+      print("Entrou no response 200");
+      List<CamarasTecnicas> posts = decoded.map<CamarasTecnicas>((map) {
+        return CamarasTecnicas.fromJson(map);
       }).toList();
 
       return posts;

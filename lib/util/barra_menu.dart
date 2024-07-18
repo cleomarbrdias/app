@@ -43,19 +43,19 @@ PreferredSizeWidget BarraMenu(BuildContext context) {
           onPressed: () {
             push(context, Favoritos());
           }),*/
-      IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () async {
-            String? result =
-                await showSearch(context: context, delegate: Pesquisa());
-            if (result != null) {
-              _onClickPesquisa(context, result);
-            }
-          })
+      // IconButton(
+      //     icon: Icon(Icons.search),
+      //     onPressed: () async {
+      //       String? result =
+      //           await showSearch(context: context, delegate: Pesquisa());
+      //       if (result != null) {
+      //         _onClickPesquisa(context, result);
+      //       }
+      //     })
     ],
   );
 }
 
-_onClickPesquisa(BuildContext context, String result) {
-  push(context, HomePesquisa(result));
-}
+// _onClickPesquisa(BuildContext context, String result) {
+//   push(context, HomePesquisa(result));
+// }

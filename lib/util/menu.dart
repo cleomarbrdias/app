@@ -1,11 +1,16 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:conass/bloc/biblioteca_bloc.dart';
 import 'package:conass/bloc/post_bloc.dart';
+import 'package:conass/bloc/post_camaras_tecnicas_bloc.dart';
+import 'package:conass/bloc/post_presidentes_bloc.dart';
 import 'package:conass/bloc/post_secretarios_bloc.dart';
 import 'package:conass/paginas/home_page.dart';
 import 'package:conass/paginas/page_biblioteca.dart';
+import 'package:conass/paginas/page_camaras_tecnicas.dart';
 import 'package:conass/paginas/page_contato.dart';
 import 'package:conass/paginas/page_multimidia.dart';
+import 'package:conass/paginas/page_pagina.dart';
+import 'package:conass/paginas/page_presidentes.dart';
 import 'package:conass/paginas/page_secretarios.dart';
 import 'package:conass/util/cores.dart';
 import 'package:conass/util/push.dart';
@@ -13,6 +18,8 @@ import 'package:conass/util/util.dart';
 import 'package:flutter/material.dart';
 
 class MenuList extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.getBloc<PostsBloc>();
@@ -43,7 +50,7 @@ class MenuList extends StatelessWidget {
               size: 30,
             ),
             title: Text(
-              "INSTITUCIONAL",
+              "Institucional",
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -55,11 +62,56 @@ class MenuList extends StatelessWidget {
                   children: <Widget>[
                     ListTile(
                       onTap: () {
-                        pop(context);
+                        Navigator.pop(context);
                         Util.pagina = 5384;
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PagePagina(
+                              scaffoldKey: GlobalKey<
+                                  ScaffoldState>(), // Defina um novo scaffoldKey
+                            ),
+                          ),
+                        );
+
+                        print("Sobre o Conass");
                       },
                       title: Text(
-                        "Quem Somos",
+                        "Sobre o Conass",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      // onTap: () {
+                      //   pop(context);
+                      //   Util.pagina = 5384;
+
+                      //   push(
+                      //       context,
+                      //       PagePagina(
+                      //         scaffoldKey: scaffoldKey,
+                      //       ));
+
+                      //   print("Sobre o Conass");
+                      // },
+                      // title: Text(
+                      //   "Sobre o Conass",
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //   ),
+                      // ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        final blocP =
+                            BlocProvider.getBloc<PostPresidentesBloc>();
+                        pop(context);
+                        blocP.inCategoria.add('presidentes');
+                        pushReplacement(context, PagePresidentes());
+                      },
+                      title: Text(
+                        "Presidentes",
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -67,12 +119,14 @@ class MenuList extends StatelessWidget {
                     ),
                     ListTile(
                       onTap: () {
-                        //pop(context);
-                        //pushReplacement(context, PagePresidentes());
-                        //push(context, PagePresidentes());
+                        final blocC =
+                            BlocProvider.getBloc<PostCamarasTecnicasBloc>();
+                        pop(context);
+                        blocC.inCategoria.add('camaras-tecnicas');
+                        pushReplacement(context, PageCamarasTecnicas());
                       },
                       title: Text(
-                        "Presidentes",
+                        "Câmaras Técnicas",
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -216,6 +270,7 @@ class MenuList extends StatelessWidget {
                       ),
                     ),
                   ),
+                  /*
                   ListTile(
                     onTap: () {
                       pop(context);
@@ -229,6 +284,7 @@ class MenuList extends StatelessWidget {
                       ),
                     ),
                   ),
+                  */
                 ]),
               ),
             ],

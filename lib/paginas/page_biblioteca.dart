@@ -44,7 +44,7 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.getBloc<BibliotecaBloc>();
-
+    print("Pagina Biblioteca");
     return Scaffold(
       appBar: BarraMenu(context),
       bottomNavigationBar: rodape(),
