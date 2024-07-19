@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:conass/modelo/camaras_tecnicas.dart';
 import 'package:conass/servicos/api_camaras_tecnicas.dart';
@@ -8,7 +7,7 @@ import 'package:conass/util/util.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PostCamarasTecnicasBloc implements BlocBase {
-  ApiCamarasTecnicas? getPostsCamarasTecnicas;
+  ApiCamarasTecnicas? postServices;
 
   //acionando a lista para armazenamento dos dados
   List<CamarasTecnicas> posts = [];
@@ -24,8 +23,8 @@ class PostCamarasTecnicasBloc implements BlocBase {
       BehaviorSubject<String?>.seeded('camaras-tecnicas');
   StreamSink<String?> get inCategoria => _categoriaController.sink;
 
-  CamarasTecnicasBloc() {
-    getPostsCamarasTecnicas = ApiCamarasTecnicas();
+  PostCamarasTecnicasBloc() {
+    postServices = ApiCamarasTecnicas();
     _categoriaController.stream.listen(_categoria);
     print(_categoriaController);
   }
@@ -34,7 +33,7 @@ class PostCamarasTecnicasBloc implements BlocBase {
     if (categoria != null) {
       print("Entrou na cetoria diferente de null");
       _postsController.sink.add([]);
-      posts = await getPostsCamarasTecnicas!.getPostsCamarasTecnicas(categoria);
+      posts = await postServices!.getPostsCamarasTecnicas(categoria);
 
       if (posts == null) {
         _postsController.sink.addError(Util.erro);
@@ -64,17 +63,17 @@ class PostCamarasTecnicasBloc implements BlocBase {
   }
 
   @override
-  void addListener(VoidCallback listener) {
-    // TODO: implement addListener
-  }
-
-  @override
   // TODO: implement hasListeners
   bool get hasListeners => throw UnimplementedError();
 
   @override
   void notifyListeners() {
     // TODO: implement notifyListeners
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    // TODO: implement addListener
   }
 
   @override

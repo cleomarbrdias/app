@@ -9,6 +9,7 @@ class PostCardPresidentes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(post.bandeira);
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -52,13 +53,39 @@ class PostCardPresidentes extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      FadeInImage.memoryNetwork(
-                        fit: BoxFit.cover,
+                      // FadeInImage.memoryNetwork(
+                      //   fit: BoxFit.cover,
+                      //   width: 40,
+                      //   height: 30,
+                      //   placeholder: kTransparentImage,
+                      //   image: post.bandeira,
+                      // ),
+                      Container(
                         width: 40,
                         height: 30,
-                        placeholder: kTransparentImage,
-                        image: post.bandeira,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 0,
+                              blurRadius: 10,
+                              offset:
+                                  Offset(0, 1), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: FadeInImage.memoryNetwork(
+                            fit: BoxFit.cover,
+                            width: 40,
+                            height: 30,
+                            placeholder: kTransparentImage,
+                            image: post.bandeira,
+                          ),
+                        ),
                       ),
+
                       SizedBox(width: 10.0),
                       Expanded(
                         child: Column(

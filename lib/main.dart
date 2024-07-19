@@ -73,6 +73,7 @@ class MyApp extends StatelessWidget {
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.white,
           ),
+          drawerTheme: DrawerThemeData(backgroundColor: Cores.VerdeMedio),
         ),
 
         /*

@@ -16,6 +16,7 @@ import 'package:conass/util/cores.dart';
 import 'package:conass/util/push.dart';
 import 'package:conass/util/util.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MenuList extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -28,25 +29,50 @@ class MenuList extends StatelessWidget {
 
     return Drawer(
       // Definindo a cor de fundo do Drawer
-      backgroundColor: Cores.VerdeEscuro,
+      // backgroundColor: Cores.VerdeMedio,
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(color: Cores.VerdeClaro),
-            margin: EdgeInsets.zero,
+          Container(
+            color: Cores.PrimaryVerde,
             padding: EdgeInsets.zero,
-            child: Center(
-              child: Image.asset(
-                "images/logo-mono.png",
-                height: 50,
+            height: 200,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 90.0, 0, 0),
+              child: Center(
+                child: Image.asset(
+                  "images/logo-conass-branco.png",
+                  height: 70,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),
+
+          // DrawerHeader(
+          //   decoration: BoxDecoration(
+          //     color: Cores.PrimaryVerde,
+          //     shape: BoxShape.rectangle,
+          //     border: Border(
+          //       bottom: BorderSide(
+          //         color: Cores.VerdeEscuro,
+          //         width: 2.0,
+          //       ),
+          //     ),
+          //   ),
+          //   margin: EdgeInsets.zero,
+          //   padding: EdgeInsets.zero,
+          //   child: Center(
+          //     child: Image.asset(
+          //       "images/logo-mono.png",
+          //       height: 50,
+          //     ),
+          //   ),
+          // ),
           ExpansionTile(
             trailing: Icon(
               Icons.keyboard_arrow_down,
-              color: Cores.PrimaryLaranja,
+              color: Colors.white,
               size: 30,
             ),
             title: Text(
@@ -137,6 +163,13 @@ class MenuList extends StatelessWidget {
               ),
             ],
           ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Divider(
+              color: Cores.VerdeEscuro,
+              thickness: 1,
+            ),
+          ),
           ListTile(
             onTap: () {
               pop(context);
@@ -149,6 +182,18 @@ class MenuList extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
               ),
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right_outlined,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Divider(
+              color: Cores.VerdeEscuro,
+              thickness: 1,
             ),
           ),
           ListTile(
@@ -165,6 +210,18 @@ class MenuList extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right_outlined,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Divider(
+              color: Cores.VerdeEscuro,
+              thickness: 1,
+            ),
           ),
           ListTile(
             onTap: () {
@@ -180,11 +237,23 @@ class MenuList extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right_outlined,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Divider(
+              color: Cores.VerdeEscuro,
+              thickness: 1,
+            ),
           ),
           ExpansionTile(
             trailing: Icon(
               Icons.keyboard_arrow_down,
-              color: Color(0xfff3902b),
+              color: Colors.white,
               size: 30,
             ),
             title: Text(
@@ -240,54 +309,87 @@ class MenuList extends StatelessWidget {
               ),
             ],
           ),
-          ExpansionTile(
-            trailing: Icon(
-              Icons.keyboard_arrow_down,
-              color: Color(0xfff3902b),
-              size: 30,
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Divider(
+              color: Cores.VerdeEscuro,
+              thickness: 1,
             ),
+          ),
+          ListTile(
+            onTap: () {
+              final blocC = BlocProvider.getBloc<PostSecretariosBloc>();
+              pop(context);
+              blocC.inCategoria.add('secretarias-estaduai');
+              pushReplacement(context, PageSecretarios());
+            },
             title: Text(
-              "Secretarias Estaduais",
+              "Secretarias Estaduais de Saúde",
               style: TextStyle(
                 color: Colors.white,
               ),
             ),
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: Column(children: <Widget>[
-                  ListTile(
-                    onTap: () {
-                      final blocC = BlocProvider.getBloc<PostSecretariosBloc>();
-                      pop(context);
-                      blocC.inCategoria.add('secretarias-estaduai');
-                      pushReplacement(context, PageSecretarios());
-                    },
-                    title: Text(
-                      "Secretarias Estaduais de Saúde",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  /*
-                  ListTile(
-                    onTap: () {
-                      pop(context);
+            trailing: Icon(
+              Icons.keyboard_arrow_right_outlined,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
+          // ExpansionTile(
+          //   trailing: Icon(
+          //     Icons.keyboard_arrow_down,
+          //     color: Colors.white,
+          //     size: 30,
+          //   ),
+          //   title: Text(
+          //     "Secretarias Estaduais",
+          //     style: TextStyle(
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          //   children: <Widget>[
+          //     Padding(
+          //       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+          //       child: Column(children: <Widget>[
+          //         ListTile(
+          //           onTap: () {
+          //             final blocC = BlocProvider.getBloc<PostSecretariosBloc>();
+          //             pop(context);
+          //             blocC.inCategoria.add('secretarias-estaduai');
+          //             pushReplacement(context, PageSecretarios());
+          //           },
+          //           title: Text(
+          //             "Secretarias Estaduais de Saúde",
+          //             style: TextStyle(
+          //               color: Colors.white,
+          //             ),
+          //           ),
+          //         ),
+          //         /*
+          //         ListTile(
+          //           onTap: () {
+          //             pop(context);
 
-                      /*push(context, PostGestores());*/
-                    },
-                    title: Text(
-                      "Gestores Estaduais",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  */
-                ]),
-              ),
-            ],
+          //             /*push(context, PostGestores());*/
+          //           },
+          //           title: Text(
+          //             "Gestores Estaduais",
+          //             style: TextStyle(
+          //               color: Colors.white,
+          //             ),
+          //           ),
+          //         ),
+          //         */
+          //       ]),
+          //     ),
+          //   ],
+          // ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Divider(
+              color: Cores.VerdeEscuro,
+              thickness: 1,
+            ),
           ),
           ListTile(
             onTap: () {
@@ -301,25 +403,114 @@ class MenuList extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-          ),
-          ListTile(
-            onTap: () {
-              pop(context);
-
-              pushReplacement(context, PageContato());
-            },
-            title: Text(
-              "Contato",
-              style: TextStyle(
-                color: Colors.white,
-              ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right_outlined,
+              color: Colors.white,
+              size: 30,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Divider(
+              color: Cores.VerdeEscuro,
+              thickness: 1,
+            ),
+          ),
+          Container(
+              color: Cores.PrimaryVerde,
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () => _launchURL(
+                              'http://www.facebook.com/conassoficial'),
+                          child: Image.asset('images/facebook_app.png',
+                              width: 40, height: 40),
+                        ),
+                        InkWell(
+                            onTap: () =>
+                                _launchURL('https://twitter.com/CONASSoficial'),
+                            child: Image.asset('images/x_app.png',
+                                width: 40, height: 40)),
+                        InkWell(
+                          onTap: () => _launchURL(
+                              'http://www.youtube.com/conassoficial'),
+                          child: Image.asset('images/youtube_app.png',
+                              width: 40, height: 40),
+                        ),
+                        InkWell(
+                          onTap: () => _launchURL(
+                              'https://www.instagram.com/conassoficial/'),
+                          child: Image.asset('images/instagram_app.png',
+                              width: 40, height: 40),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 25),
+                    child: Column(
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () => _launchURL(
+                              'https://maps.app.goo.gl/ZUuwG54hnbHVdE628'),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.location_on_outlined,
+                                  color: Colors.orange),
+                              SizedBox(width: 8),
+                              Text(
+                                'Setor Comercial Sul, Quadra 9, Torre C, Sala 1105, Edifício\n'
+                                'Parque Cidade Corporate Brasília/DF CEP: 70308-200',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 8,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
+          // ListTile(
+          //   onTap: () {
+          //     pop(context);
+
+          //     pushReplacement(context, PageContato());
+          //   },
+          //   title: Text(
+          //     "Contato",
+          //     style: TextStyle(
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
   }
 }
+
+void _launchURL(String res) async {
+  final Uri uri = Uri.parse(res);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    throw 'Could not launch $res';
+  }
+}
+
 
 
 /*

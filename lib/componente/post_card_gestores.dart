@@ -1,4 +1,4 @@
-import 'package:conass/bloc/pagina_secretaria.dart';
+import 'package:conass/paginas/pagina_secretaria.dart';
 import 'package:conass/modelo/post.dart';
 import 'package:conass/modelo/post_secretarios.dart';
 import 'package:conass/util/cores.dart';

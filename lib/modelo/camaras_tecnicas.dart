@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class CamarasTecnicas {
   final int id;
   final String title;
@@ -8,6 +7,7 @@ class CamarasTecnicas {
   final String linksDocumentos;
   final String eventos;
   final String imageDestaque;
+
   CamarasTecnicas({
     required this.id,
     required this.title,
@@ -35,13 +35,13 @@ class CamarasTecnicas {
   factory CamarasTecnicas.fromJson(Map<String, dynamic> json) {
     return CamarasTecnicas(
       id: json['id'] as int,
-      title: json['title'] as String,
-      sobre: json['meta']['sobre'] as String,
-      apresentacao: json['meta']['apresentacao'] as String,
-      membros: json['meta']['membros'] as String,
-      linksDocumentos: json['meta']['linksDocumentos'] as String,
-      eventos: json['meta']['eventos'] as String,
-      imageDestaque: json['featured_media_url'] as String,
+      title: json['title']['rendered'] as String? ?? '',
+      sobre: json['meta']['sobre-as-camaras-tecnicas'] as String? ?? '',
+      apresentacao: json['meta']['apresentacao'] as String? ?? '',
+      membros: json['meta']['membros'] as String? ?? '',
+      linksDocumentos: json['meta']['links-e-documentos'] as String? ?? '',
+      eventos: json['meta']['eventos'] as String? ?? '',
+      imageDestaque: json['featured_media_url'] as String? ?? '',
     );
   }
 }
