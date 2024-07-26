@@ -1,12 +1,12 @@
-class Pagina {
+class ModeloPagina {
   final int id;
   final String title;
   final String materia;
 
-  Pagina({required this.id, required this.title, required this.materia});
+  ModeloPagina({required this.id, required this.title, required this.materia});
 
-  factory Pagina.fromJson(Map<String, dynamic> json) {
-    return Pagina(
+  factory ModeloPagina.fromJson(Map<String, dynamic> json) {
+    return ModeloPagina(
       id: json["id"] ?? 0,
       title: json["title"]["rendered"] ?? '',
       materia: json["content"]["rendered"] ?? '',
@@ -23,6 +23,6 @@ class Pagina {
 
   @override
   String toString() {
-    return 'Pagina{id: $id, title: $title, content: $materia}';
+    return 'ModeloPagina{id: $id, title: $title, content: $materia}';
   }
 }

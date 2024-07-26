@@ -10,12 +10,34 @@ class Api {
   int _page = 1;
   int? categoria;
 
+  Future<List<Post>> getPostsDestaque() async {
+    try {
+      Uri url = Uri.parse(
+          "https://www.conass.org.br/wp-json/wp/v2/posts?categories=7,46&per_page=20&orderby=date&order=desc");
+      http.Response response = await http.get(url);
+
+      return decode(response);
+    } catch (error) {
+      throw Exception('Erro ao estabelecer conexão, tente mais tarde!!');
+    }
+  }
+
+  Future<List<Post>> getPostsMaisNoticias() async {
+    try {
+      Uri url = Uri.parse(
+          "https://www.conass.org.br/wp-json/wp/v2/posts?categories=8&per_page=20&orderby=date&order=desc");
+      http.Response response = await http.get(url);
+
+      return decode(response);
+    } catch (error) {
+      throw Exception('Erro ao estabelecer conexão, tente mais tarde!!');
+    }
+  }
+
   Future<List<Post>> getPosts(int categoria) async {
     try {
       _page = 1;
       _categoria = categoria;
-
-      print("Categoria $categoria");
 
       Uri url = Uri.parse(
           "https://www.conass.org.br/wp-json/wp/v2/posts?categories=$categoria");
@@ -42,7 +64,6 @@ class Api {
           "https://www.conass.org.br/wp-json/wp/v2/posts?categories=$_categoria&page=$_page"));
       return decode(response);
     } catch (error) {
-      print("Erro na próxima página: $error");
       throw Exception("Erro na próxima página: $error"); // Retorne uma exceção
     }
   }

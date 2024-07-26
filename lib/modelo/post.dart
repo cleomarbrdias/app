@@ -10,6 +10,7 @@ class Post {
   String? linkEbook;
   final String data;
   String? categoria;
+  List<String>? categoriaList; // Adicionando a lista de categorias
 
   Post({
     this.id,
@@ -23,6 +24,7 @@ class Post {
     this.linkEbook,
     required this.data,
     this.categoria,
+    this.categoriaList, // Incluindo no construtor
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -54,12 +56,6 @@ class Post {
 
     final String resMateria =
         json["content"] != null ? json["content"]["rendered"] ?? "" : "";
-/*
-    final String acf_categoria = json["acf"] != null
-
-        ? (json["acf"]["titulo_categoria"] as String? ?? '')
-        : '';
-*/
 
     String linkPdf = "";
     if (json.containsKey(json["acf"]) &&
@@ -74,13 +70,7 @@ class Post {
         json["acf"].containsKey("linkEbook")) {
       linkEbook = json["acf"]["linkEbook"] as String? ?? "";
     }
-    /*
-    final String linkPdf =
-        json["acf"] != null ? (json["acf"]["linkpdf"] as String? ?? '') : '';
 
-    final String linkEbook =
-        json["acf"] != null ? (json["acf"]["linkEbook"] as String? ?? '') : '';
-*/
     final List<String> categoriaList =
         List<String>.from(json["nomeCategoria"] ?? []);
     final String? firstCategoria =
@@ -94,10 +84,10 @@ class Post {
       materia: resMateria,
       img: resImg,
       link: json["link"] ?? '',
-      //nCategoria: nCategoria,
       linkPdf: linkPdf,
       linkEbook: linkEbook,
       categoria: firstCategoria,
+      categoriaList: categoriaList, // Incluindo a lista de categorias
     );
   }
 
@@ -114,6 +104,7 @@ class Post {
       "linkPdf": linkPdf,
       "linkEbook": linkEbook,
       "categoria": categoria,
+      "categoriaList": categoriaList, // Adicionando ao mapeamento JSON
     };
   }
 }

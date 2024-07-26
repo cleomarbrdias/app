@@ -1,11 +1,14 @@
 import 'dart:convert';
-import 'package:conass/componente/pagina.dart';
+import 'package:conass/modelo/modelo_pagina.dart';
 import 'package:conass/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class ApiPagina {
-  Future<Pagina> getPagina(int pagina) async {
+  Future<ModeloPagina> getPagina(int pagina) async {
     try {
       print("Categoria $pagina");
 
@@ -29,11 +32,10 @@ class ApiPagina {
     }
   }
 
-  Pagina decode(http.Response response) {
+  ModeloPagina decode(http.Response response) {
     if (response.statusCode == 200) {
       var decoded = json.decode(response.body);
-
-      return Pagina.fromJson(decoded);
+      return ModeloPagina.fromJson(decoded);
     } else if (response.statusCode == 404) {
       Util.erro =
           "Página não encontrada (erro 404) - Pedimos desculpas, mas a página que você está tentando acessar não está disponível.";
@@ -47,7 +49,6 @@ class ApiPagina {
     }
   }
 }
-
 
   /*
   Future<Pagina> getPagina(int pagina) async {

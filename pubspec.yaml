@@ -37,7 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   connectivity: ^3.0.6
   http: ^1.2.1
-  bloc_pattern: ^3.0.1
+  #bloc_pattern: ^3.0.1
+  provider: ^6.0.0
   rxdart: ^0.27.7
   transparent_image: ^2.0.1
   shared_preferences: ^2.2.3
@@ -50,6 +51,9 @@ dependencies:
   firebase_messaging: ^15.0.2
   firebase_core: ^3.1.1
   carousel_slider:
+  page_transition: ^2.0.9
+  flutter_localizations:
+    sdk: flutter
 
 
 dev_dependencies:
@@ -95,6 +99,9 @@ flutter:
     - family: GoogleSansMediumItalic
       fonts:
         - asset: awesome_app/fonts/GoogleSans-MediumItalic.ttf
+    - family: GibsonMediumItalic
+      fonts:
+        - asset: awesome_app/fonts/Fontspring-DEMO-gibson-mediumitalic.otf
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -103,6 +110,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+    - awesome_app/fonts/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -25,6 +25,7 @@ class ApiMenuHome {
         return Menu.fromJson(map);
       }).toList();
 
+      print(menus);
       return menus;
     } else if (response.statusCode == 404) {
       Util.erro =

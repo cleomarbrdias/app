@@ -44,17 +44,17 @@ class PostPresidentes {
       return " "; // Retorno padrão para outros campos
     }
 
-    final List<String> NomeEstadoList =
-        List<String>.from(json["nomeEstado"] ?? []);
-    final String? firstNomeEstado =
-        NomeEstadoList.isNotEmpty ? NomeEstadoList.first : null;
+    // final List<String> NomeEstadoList =
+    //     List<String>.from(json["nomeEstado"] ?? []);
+    // final String? firstNomeEstado =
+    //     NomeEstadoList.isNotEmpty ? NomeEstadoList.first : null;
 
     return PostPresidentes(
       id: json['id'] as int,
       title: parseString(json['title']['rendered']),
       anoDeGestao: parseString(json['meta']['ano-de-gestao']),
       bandeira: resImg,
-      nomeEstado: firstNomeEstado,
+      nomeEstado: parseString(json['meta']['estado']),
       imageDestaque: resDest,
     );
   }

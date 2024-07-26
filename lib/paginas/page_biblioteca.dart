@@ -1,6 +1,7 @@
 import 'dart:async';
-
-import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:conass/componente/card_publicacao.dart';
+import 'package:conass/util/rodape.dart';
+import 'package:provider/provider.dart';
 import 'package:conass/bloc/biblioteca_bloc.dart';
 import 'package:conass/componente/post_card_new.dart';
 import 'package:conass/paginas/page_menu_biblioteca.dart';
@@ -21,7 +22,6 @@ class PageBiblioteca extends StatefulWidget {
 
 class _PageBibliotecaState extends State<PageBiblioteca> {
   late StreamSubscription _connectionChangeStream;
-
   bool isOffline = false;
 
   @override
@@ -43,12 +43,13 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.getBloc<BibliotecaBloc>();
+    final bloc = Provider.of<BibliotecaBloc>(context);
     print("Pagina Biblioteca");
     return Scaffold(
       appBar: BarraMenu(context),
-      bottomNavigationBar: rodape(),
+      //bottomNavigationBar: Rodape(),
       drawer: MenuList(),
+      bottomNavigationBar: Rodape(),
       body: StreamBuilder(
         stream: bloc.outPosts,
         builder: (context, AsyncSnapshot snapshot) {
@@ -73,59 +74,19 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
           } else {
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.7,
+                crossAxisCount: 1,
+                childAspectRatio:
+                    2.5, // Ajuste de acordo com a proporção do card
               ),
               itemCount: (snapshot.data as List).length,
               itemBuilder: (context, index) {
-                return CardPost(snapshot.data![
+                return CardPublicacao(snapshot.data![
                     index]); // Usando a notação ! para garantir que snapshot.data não seja nulo
               },
             );
           }
         },
       ),
-    );
-  }
-
-  Widget rodape() {
-    return Stack(
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(width: 0.3, color: Cores.PrimaryLaranja),
-            ),
-          ),
-          width: MediaQuery.of(context).size.width,
-          height: 40,
-          child: Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () {
-                    push(context, MenuBiblioteca());
-                  },
-                  child: Text(
-                    "+Linhas Editoriais".toUpperCase(),
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Cores.PrimaryVerde,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.horizontal(
-                        left: Radius.circular(3.0),
-                        right: Radius.circular(3.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 

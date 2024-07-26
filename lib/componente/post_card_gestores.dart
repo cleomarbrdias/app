@@ -14,7 +14,7 @@ class PostCardGestores extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.fromLTRB(30, 20, 30, 2),
       child: Container(
         padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -30,10 +30,20 @@ class PostCardGestores extends StatelessWidget {
           child: Row(
             children: [
               Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 0,
+                      blurRadius: 10,
+                      offset: Offset(0, 1), // changes position of shadow
+                    ),
+                  ],
+                ),
                 width: 100.0,
                 height: 70.0,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(20.0),
                   child: FadeInImage.memoryNetwork(
                     fit: BoxFit.cover,
                     width: double.infinity,
@@ -52,17 +62,18 @@ class PostCardGestores extends StatelessWidget {
                     Text(
                       post.estado ?? '',
                       style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Cores.PrimaryVerde,
+                        fontSize: 14.0,
+                        fontFamily: 'GoogleSansMedium',
+                        color: Cores.AzulVerdeado,
                       ),
                       overflow: TextOverflow.clip,
                     ),
                     Text(
                       post.nome_do_secretario ?? '',
                       style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black54,
+                        fontSize: 12.0,
+                        fontFamily: 'GoogleSans',
+                        color: Color(0xff646464),
                       ),
                       softWrap: true,
                     )

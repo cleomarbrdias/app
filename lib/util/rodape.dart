@@ -1,5 +1,7 @@
 import 'package:conass/paginas/home_page.dart';
+import 'package:conass/paginas/new_home.dart';
 import 'package:conass/util/push.dart';
+import 'package:conass/util/util.dart';
 import 'package:flutter/material.dart';
 
 class Rodape extends StatefulWidget {
@@ -16,7 +18,7 @@ class _RodapeState extends State<Rodape> {
     });
 
     if (index == 0) {
-      pushReplacement(context, HomePage());
+      pushReplacement(context, NewHome());
     } else if (index == 1) {
       print(index);
       print("Print Pesquisa");

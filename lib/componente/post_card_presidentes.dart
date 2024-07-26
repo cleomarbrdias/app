@@ -34,7 +34,7 @@ class PostCardPresidentes extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 30.0,
+              width: 20.0,
             ),
             Expanded(
               child: Column(
@@ -44,8 +44,8 @@ class PostCardPresidentes extends StatelessWidget {
                     post.title ?? '',
                     style: TextStyle(
                       fontSize: 13.0,
-                      fontWeight: FontWeight.bold,
-                      color: Cores.PrimaryVerde,
+                      fontFamily: 'GoogleSansMedium',
+                      color: Cores.AzulVerdeado,
                     ),
                     softWrap: true,
                   ),
@@ -66,7 +66,7 @@ class PostCardPresidentes extends StatelessWidget {
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withOpacity(0.1),
                               spreadRadius: 0,
                               blurRadius: 10,
                               offset:
@@ -103,6 +103,7 @@ class PostCardPresidentes extends StatelessWidget {
                               'Gestão: ${post.anoDeGestao ?? ''}',
                               style: TextStyle(
                                 fontSize: 10.0,
+                                fontFamily: 'GoogleSansItalic',
                                 color: Colors.black54,
                               ),
                               softWrap: true,

@@ -1,8 +1,6 @@
 import 'dart:async';
-
-import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:provider/provider.dart';
 import 'package:conass/bloc/post_camaras_tecnicas_bloc.dart';
-import 'package:conass/bloc/post_presidentes_bloc.dart';
 import 'package:conass/componente/post_card_camaras_tecnicas.dart';
 import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/connectionStatusSingleton.dart';
@@ -50,7 +48,7 @@ class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
       DeviceOrientation.portraitDown,
     ]);
 
-    final bloc = BlocProvider.getBloc<PostCamarasTecnicasBloc>();
+    final bloc = Provider.of<PostCamarasTecnicasBloc>(context);
     print("Pagina Camaras Tecnicas");
     if (isOffline) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -86,7 +84,7 @@ class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
                 ),
               ),
             );
-          } else if (!snapshot.hasData || snapshot.data.length == 0) {
+          } else if (!snapshot.hasData || snapshot.data!.length == 0) {
             return Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Cores.LaranjaEscuro),
@@ -111,9 +109,9 @@ class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: snapshot.data.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      return PostCardCamarasTecnicas(snapshot.data[index]);
+                      return PostCardCamarasTecnicas(snapshot.data![index]);
                     },
                     padding: EdgeInsets.all(10),
                   ),
@@ -130,6 +128,140 @@ class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
     );
   }
 }
+
+
+// import 'dart:async';
+
+// import 'package:bloc_pattern/bloc_pattern.dart';
+// import 'package:conass/bloc/post_camaras_tecnicas_bloc.dart';
+// import 'package:conass/bloc/post_presidentes_bloc.dart';
+// import 'package:conass/componente/post_card_camaras_tecnicas.dart';
+// import 'package:conass/util/barra_menu.dart';
+// import 'package:conass/util/connectionStatusSingleton.dart';
+// import 'package:conass/util/cores.dart';
+// import 'package:conass/util/menu.dart';
+// import 'package:conass/util/rodape.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+
+// class PageCamarasTecnicas extends StatefulWidget {
+//   PageCamarasTecnicas({Key? key}) : super(key: key);
+//   @override
+//   _PageCamarasTecnicasState createState() => _PageCamarasTecnicasState();
+// }
+
+// class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
+//   // ignore: unused_field, cancel_subscriptions
+//   StreamSubscription? _connectionChangeStream;
+
+//   bool isOffline = false;
+
+//   @override
+//   initState() {
+//     super.initState();
+
+//     ConnectionStatusSingleton connectionStatus =
+//         ConnectionStatusSingleton.getInstance();
+//     _connectionChangeStream =
+//         connectionStatus.connectionChange.listen(connectionChanged);
+//   }
+
+//   void connectionChanged(dynamic hasConnection) {
+//     setState(() {
+//       isOffline = !hasConnection;
+//       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+//     });
+//   }
+
+//   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     SystemChrome.setPreferredOrientations([
+//       DeviceOrientation.portraitUp,
+//       DeviceOrientation.portraitDown,
+//     ]);
+
+//     final bloc = BlocProvider.getBloc<PostCamarasTecnicasBloc>();
+//     print("Pagina Camaras Tecnicas");
+//     if (isOffline) {
+//       WidgetsBinding.instance.addPostFrameCallback((_) {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(
+//             content: Text(
+//               "Parece que você está offline. Verifique sua conexão com a internet e tente novamente.",
+//               style: TextStyle(color: Colors.white, fontSize: 16),
+//             ),
+//             backgroundColor: Cores.LaranjaEscuro,
+//             duration: Duration(seconds: 3),
+//           ),
+//         );
+//       });
+//     }
+
+//     return Scaffold(
+//       key: _scaffoldKey,
+//       appBar: BarraMenu(context),
+//       drawer: MenuList(),
+//       bottomNavigationBar: Rodape(),
+//       body: StreamBuilder(
+//         stream: bloc.outPosts,
+//         builder: (context, snapshot) {
+//           print(snapshot.hasData);
+//           if (snapshot.hasError) {
+//             return Container(
+//               padding: EdgeInsets.all(24),
+//               child: Center(
+//                 child: Text(
+//                   snapshot.error.toString(),
+//                   style: TextStyle(fontSize: 20, color: Colors.grey),
+//                 ),
+//               ),
+//             );
+//           } else if (!snapshot.hasData || snapshot.data.length == 0) {
+//             return Center(
+//               child: CircularProgressIndicator(
+//                 valueColor: AlwaysStoppedAnimation<Color>(Cores.LaranjaEscuro),
+//               ),
+//             );
+//           } else if (snapshot.hasData) {
+//             print(snapshot.data);
+
+//             return Column(
+//               children: [
+//                 Padding(
+//                   padding: EdgeInsets.all(16.0),
+//                   child: Text(
+//                     'Câmaras Técnicas '.toUpperCase(),
+//                     textAlign: TextAlign.center,
+//                     style: TextStyle(
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.bold,
+//                       color: Cores.LaranjaClaro,
+//                     ),
+//                   ),
+//                 ),
+//                 Expanded(
+//                   child: ListView.builder(
+//                     itemCount: snapshot.data.length,
+//                     itemBuilder: (context, index) {
+//                       return PostCardCamarasTecnicas(snapshot.data[index]);
+//                     },
+//                     padding: EdgeInsets.all(10),
+//                   ),
+//                 ),
+//               ],
+//             );
+//           } else {
+//             return Container(
+//               child: Text("Nenhuma categoria carregada..."),
+//             );
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }
 
 
 
