@@ -35,10 +35,6 @@ class CardPublicacao extends StatelessWidget {
               height: cardHeight,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(
-                  image: NetworkImage(post.img!),
-                  fit: BoxFit.cover,
-                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black26,
@@ -47,11 +43,30 @@ class CardPublicacao extends StatelessWidget {
                   ),
                 ],
               ),
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Fundo branco
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      image: DecorationImage(
+                        image: NetworkImage(post.img!),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(width: 10),
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.only(
@@ -66,11 +81,11 @@ class CardPublicacao extends StatelessWidget {
                     Text(
                       post.title!,
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: 14.0,
                         fontFamily: 'GoogleSansMedium',
                         color: Cores.AzulVerdeado,
                       ),
-                      maxLines: 3,
+                      maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 10),
@@ -79,7 +94,7 @@ class CardPublicacao extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Colors.black45,
-                        fontSize: 12.0,
+                        fontSize: 9.0,
                         fontFamily: 'GoogleSansItalic',
                       ),
                     ),
