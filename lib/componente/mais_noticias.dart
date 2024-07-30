@@ -65,7 +65,7 @@ class MaisNoticias extends StatelessWidget {
                         children: [
                           FadeInImage.memoryNetwork(
                             placeholder: kTransparentImage,
-                            image: posts[index].img ?? 'images/placeholder.gif',
+                            image: posts[index].img,
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: double.infinity,
@@ -77,7 +77,6 @@ class MaisNoticias extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color(0xff894124).withOpacity(0.8),
-                                //borderRadius: BorderRadius.circular(20.0),
                               ),
                               padding: EdgeInsets.symmetric(
                                   vertical: screenWidth * 0.01,
@@ -88,38 +87,18 @@ class MaisNoticias extends StatelessWidget {
                                 children: [
                                   Flexible(
                                     child: Text(
-                                      posts[index].title ?? '',
+                                      posts[index].title,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
                                       ),
-                                      //determina a altura e linhas do title
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  // Icon(
-                                  //   Icons.bookmark_border,
-                                  //   color: Colors.white,
-                                  // ),
                                 ],
                               ),
                             ),
-                            // child: Container(
-                            //   height:
-                            //       0.3 * cardWidth, // 30% da altura do container
-                            //   color: Color(0xff894124)
-                            //       .withOpacity(0.8), // Fundo laranja
-                            //   padding: EdgeInsets.all(8.0),
-                            //   child: Text(
-                            //     posts[index].title ?? '',
-                            //     style: TextStyle(
-                            //       color: Colors.white,
-                            //       fontFamily: 'GoogleSansMedium',
-                            //       fontSize: 10,
-                            //     ),
-                            //   ),
-                            // ),
                           ),
                         ],
                       ),

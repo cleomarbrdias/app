@@ -4,6 +4,7 @@ import 'package:conass/util/cores.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class NewPostCardNoticias extends StatelessWidget {
   final Post post;
@@ -14,6 +15,9 @@ class NewPostCardNoticias extends StatelessWidget {
     var dt = DateTime.parse(post.data ?? DateTime.now().toIso8601String());
     var forData = DateFormat('dd \'de\' MMMM \'de\' yyyy', 'pt_BR');
     String resData = forData.format(dt);
+    bool shouldDisplayImage =
+        post.img != "https://www.conass.org.br/padraoMobile/padrao.png";
+    print(post.img);
 
     return InkWell(
       onTap: () {
@@ -40,27 +44,29 @@ class NewPostCardNoticias extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Flexible(
-                flex: 3,
-                child: Hero(
-                  tag: "${post.title}",
-                  child: Container(
-                    height: 100.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      image: DecorationImage(
-                        image: NetworkImage(post.img!),
-                        fit: BoxFit.fitHeight,
+              if (shouldDisplayImage)
+                Flexible(
+                  flex: 3,
+                  child: Hero(
+                    tag: "${post.title}",
+                    child: Container(
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        image: DecorationImage(
+                          image: NetworkImage(post.img),
+                          fit: BoxFit.fitHeight,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
+              if (shouldDisplayImage)
+                SizedBox(
+                  width: 10.0,
+                ),
               Flexible(
-                flex: 7,
+                flex: shouldDisplayImage ? 7 : 10,
                 child: Column(
                   mainAxisAlignment:
                       MainAxisAlignment.center, // Centraliza verticalmente
@@ -68,9 +74,9 @@ class NewPostCardNoticias extends StatelessWidget {
                       CrossAxisAlignment.start, // Alinha à esquerda
                   children: [
                     Text(
-                      post.title!.length > 100
-                          ? post.title!.substring(0, 100) + '...'
-                          : post.title!,
+                      post.title.length > 100
+                          ? post.title.substring(0, 100) + '...'
+                          : post.title,
                       style: TextStyle(
                         fontSize: 13.0,
                         fontFamily: 'GoogleSansMedium',
@@ -89,7 +95,7 @@ class NewPostCardNoticias extends StatelessWidget {
                             fontSize: 10.0,
                             fontFamily: 'GoogleSansItalic',
                           )),
-                    )
+                    ),
                   ],
                 ),
               ),

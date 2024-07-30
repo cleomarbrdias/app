@@ -80,14 +80,27 @@ class _PaginaSecretariaState extends State<PaginaSecretaria> {
                     Center(
                       child: Container(
                         width: 300,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30.0),
-                          child: FadeInImage.memoryNetwork(
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            placeholder: kTransparentImage,
-                            image: widget.post.imageDestaque,
-                          ),
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: 200, // define a altura da imagem
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: Colors.grey[200], // cor do placeholder
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(30.0),
+                              child: FadeInImage.memoryNetwork(
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 200, // define a altura da imagem
+                                placeholder: kTransparentImage,
+                                image: widget.post.imageDestaque,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

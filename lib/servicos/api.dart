@@ -24,12 +24,21 @@ class Api {
 
   Future<List<Post>> getPostsMaisNoticias() async {
     try {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult == ConnectivityResult.none) {
+        throw Exception('Sem conexão com a internet.');
+      }
+
       Uri url = Uri.parse(
-          "https://www.conass.org.br/wp-json/wp/v2/posts?categories=8&per_page=20&orderby=date&order=desc");
+          "https://www.conass.org.br/wp-json/wp/v2/posts?categories=6&per_page=20&orderby=date&order=desc");
       http.Response response = await http.get(url);
+
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
 
       return decode(response);
     } catch (error) {
+      print("Erro na API: $error");
       throw Exception('Erro ao estabelecer conexão, tente mais tarde!!');
     }
   }
@@ -46,7 +55,7 @@ class Api {
       return decode(response);
     } catch (error) {
       Util.erro = "Erro ao estabelecer conexão, tente mais tarde!!";
-      throw Exception(Util.erro); // Adicione um throw para retornar exceção
+      throw Exception(Util.erro);
     }
   }
 
@@ -54,17 +63,16 @@ class Api {
     _page++;
 
     try {
-      var connectivityResult = await (Connectivity().checkConnectivity());
-
+      var connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult == ConnectivityResult.none) {
-        // Lógica para tratamento de falta de conexão
+        throw Exception('Sem conexão com a internet.');
       }
 
       http.Response response = await http.get(Uri.parse(
           "https://www.conass.org.br/wp-json/wp/v2/posts?categories=$_categoria&page=$_page"));
       return decode(response);
     } catch (error) {
-      throw Exception("Erro na próxima página: $error"); // Retorne uma exceção
+      throw Exception("Erro na próxima página: $error");
     }
   }
 
@@ -79,7 +87,7 @@ class Api {
       return decode(response);
     } catch (error) {
       print("Erro na busca: $error");
-      throw Exception("Erro na busca: $error"); // Retorne uma exceção
+      throw Exception("Erro na busca: $error");
     }
   }
 
@@ -92,8 +100,7 @@ class Api {
       return decode(response);
     } catch (error) {
       print("Erro na próxima página da busca: $error");
-      throw Exception(
-          "Erro na próxima página da busca: $error"); // Retorne uma exceção
+      throw Exception("Erro na próxima página da busca: $error");
     }
   }
 

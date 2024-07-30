@@ -97,14 +97,15 @@ class _HomePageState extends State<HomePage> {
             return ListView.builder(
               itemBuilder: (context, index) {
                 if (index < snapshot.data!.length) {
-                  if (Util.cat == 5) {
-                    return PostCardConassInforma(snapshot.data![index]);
-                  } else if (Util.cat == 118) {
-                    return PostCardNotasConass(snapshot.data![index]);
-                  } else {
-                    //return PostCard(snapshot.data![index]);
-                    return NewPostCardNoticias(snapshot.data![index]);
-                  }
+                  return NewPostCardNoticias(snapshot.data![index]);
+                  // if (Util.cat == 5) {
+                  //   return PostCardConassInforma(snapshot.data![index]);
+                  // } else if (Util.cat == 118) {
+                  //   return PostCardNotasConass(snapshot.data![index]);
+                  // } else {
+                  //   //return PostCard(snapshot.data![index]);
+                  //   return NewPostCardNoticias(snapshot.data![index]);
+                  // }
                 } else if (index > 1) {
                   bloc.inCategoria.add(null);
                   return Container(

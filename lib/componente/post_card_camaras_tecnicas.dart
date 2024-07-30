@@ -12,41 +12,47 @@ class PostCardCamarasTecnicas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.fromLTRB(30, 20, 30, 2),
       child: Container(
-        padding: EdgeInsets.all(0.0),
+        padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          //color: Color.fromARGB(182, 0, 184, 160),
+          color: Colors.grey.shade100,
           borderRadius: BorderRadius.circular(16.0),
-          border: Border.all(color: Colors.grey.shade300, width: 1.0),
         ),
         child: InkWell(
           onTap: () {
+            print("clicou");
             _onClickPost(context, post);
-            //print(post);
+            print(post);
           },
           child: Row(
             children: [
               Container(
-                width: 100.0,
-                height: 80.0,
-                padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  color: Cores.VerdeClaro,
-                  borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 0,
+                      blurRadius: 30,
+                      offset: Offset(0, 1), // changes position of shadow
+                    ),
+                  ],
                 ),
+                width: 100.0,
+                height: 100.0,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(20.0),
                   child: FadeInImage.memoryNetwork(
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                     width: double.infinity,
-                    height: double.infinity,
                     placeholder: kTransparentImage,
                     image: post.imageDestaque,
                   ),
                 ),
               ),
-              SizedBox(width: 15.0),
+              SizedBox(
+                width: 30.0,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,25 +60,41 @@ class PostCardCamarasTecnicas extends StatelessWidget {
                     Text(
                       post.title ?? '',
                       style: TextStyle(
-                        fontSize: 13.0,
-                        fontWeight: FontWeight.bold,
-                        color: Cores.VerdeEscuro,
+                        fontSize: 14.0,
+                        fontFamily: 'GoogleSansMedium',
+                        color: Cores.AzulVerdeado,
                       ),
-                      softWrap: true,
+                      overflow: TextOverflow.clip,
                     ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'Responsável Técnico: Fulano de Tall',
-                      style: TextStyle(
-                        fontSize: 10.0,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black54,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Responsável Técnico: ',
+                              style: TextStyle(
+                                color: Cores.FonteConteudoCardSES,
+                                fontSize: 13,
+                                fontFamily: 'GoogleSansMedium',
+                              ),
+                            ),
+                            TextSpan(
+                              text: post.responsavel ?? '',
+                              style: TextStyle(
+                                color: Cores.FonteConteudoCardSES,
+                                fontSize: 13,
+                                fontFamily: 'GoogleSans',
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      softWrap: true,
-                    )
+                    ),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),

@@ -7,17 +7,20 @@ class CamarasTecnicas {
   final String linksDocumentos;
   final String eventos;
   final String imageDestaque;
+  final String responsavel;
+  final String categoriaBiblioteca;
 
-  CamarasTecnicas({
-    required this.id,
-    required this.title,
-    required this.sobre,
-    required this.apresentacao,
-    required this.membros,
-    required this.linksDocumentos,
-    required this.eventos,
-    required this.imageDestaque,
-  });
+  CamarasTecnicas(
+      {required this.id,
+      required this.title,
+      required this.sobre,
+      required this.apresentacao,
+      required this.membros,
+      required this.linksDocumentos,
+      required this.eventos,
+      required this.imageDestaque,
+      required this.responsavel,
+      required this.categoriaBiblioteca});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -29,6 +32,8 @@ class CamarasTecnicas {
       'linksDocumentos': linksDocumentos,
       'eventos': eventos,
       'imageDestaque': imageDestaque,
+      'responsavel': responsavel,
+      'categoriaBiblioteca': categoriaBiblioteca,
     };
   }
 
@@ -41,7 +46,11 @@ class CamarasTecnicas {
       membros: json['meta']['membros'] as String? ?? '',
       linksDocumentos: json['meta']['links-e-documentos'] as String? ?? '',
       eventos: json['meta']['eventos'] as String? ?? '',
-      imageDestaque: json['featured_media_url'] as String? ?? '',
+      //imageDestaque: json["featured_media_details"]["url"] as String? ?? '',
+      imageDestaque: json['meta']['icone_app'] as String? ?? '',
+      responsavel: json['meta']['responsavel'] as String? ?? '',
+      categoriaBiblioteca:
+          json['meta']['categoria_biblioteca'] as String? ?? '',
     );
   }
 }

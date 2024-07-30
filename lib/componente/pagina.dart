@@ -6,6 +6,8 @@ import 'package:conass/modelo/post.dart';
 import 'package:conass/servicos/api_get_id.dart';
 import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/cores.dart';
+import 'package:provider/provider.dart';
+import 'package:conass/bloc/favorito_bloc.dart';
 
 class Pagina extends StatefulWidget {
   @override
@@ -29,14 +31,9 @@ class _PaginaState extends State<Pagina> {
     var forData = DateFormat('dd \'de\' MMMM \'de\' yyyy', 'pt_BR');
     String resData = forData.format(dt);
 
-    String slug;
-    ApiGetId get;
-    get = ApiGetId();
-    print("print ebook =>");
-    print(widget.p.linkEbook);
-    print("print pdf =>");
-    print(widget.p.linkPdf);
-    print("entrou na Pagina no Post");
+    final favoritoBloc = Provider.of<FavoritoBloc>(context);
+    bool isFavorited = favoritoBloc.isFavorited(widget.p);
+
     return Scaffold(
       appBar: BarraMenu(context),
       body: SingleChildScrollView(
@@ -55,7 +52,7 @@ class _PaginaState extends State<Pagina> {
                         fontFamily: 'GoogleSansMediumItalic',
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.italic,
-                        fontSize: 20,
+                        fontSize: 18,
                         letterSpacing: 0.5,
                         height: 1.2,
                         color: Cores.LaranjaTitulo,
@@ -66,16 +63,22 @@ class _PaginaState extends State<Pagina> {
                     flex: 2,
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Cores.LaranjaAmrelado,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: EdgeInsets.all(
-                            4.0), // Ajuste para menos espaço ao redor do ícone
-                        child: Icon(
-                          Icons.bookmark_border,
-                          color: Colors.white,
+                      child: GestureDetector(
+                        onTap: () {
+                          favoritoBloc.toggleFavorite(widget.p);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Cores.LaranjaAmrelado,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: EdgeInsets.all(4.0),
+                          child: Icon(
+                            isFavorited
+                                ? Icons.bookmark
+                                : Icons.bookmark_border,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -89,9 +92,8 @@ class _PaginaState extends State<Pagina> {
                 children: [
                   Text(
                     'Publicado em ' + resData,
-                    //textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontFamily: 'GibsonMediumItalic',
+                      fontFamily: 'GoogleSansMediumItalic',
                       color: Cores.FonteConteudo,
                       fontSize: 10,
                     ),
@@ -111,8 +113,7 @@ class _PaginaState extends State<Pagina> {
                       children:
                           widget.p.categoriaList!.map<Widget>((categoria) {
                         return Padding(
-                          padding: const EdgeInsets.only(
-                              right: 8.0), // Espaçamento entre os chips
+                          padding: const EdgeInsets.only(right: 8.0),
                           child: Chip(
                             label: Text(
                               categoria.toUpperCase(),
@@ -120,20 +121,18 @@ class _PaginaState extends State<Pagina> {
                                 color: Cores.VerdeMedio,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 10,
-                                // Cor do texto
                               ),
                             ),
-                            backgroundColor:
-                                Colors.white, // Cor de fundo do Chip
+                            backgroundColor: Colors.white,
                             shape: StadiumBorder(
                               side: BorderSide(
-                                color: Cores.LaranjaAmrelado, // Cor da borda
-                                width: 1, // Largura da borda
+                                color: Cores.LaranjaAmrelado,
+                                width: 1,
                               ),
                             ),
                           ),
                         );
-                      }).toList(), // Convertendo para List<Widget>
+                      }).toList(),
                     ),
                   ),
                 ),
@@ -154,7 +153,7 @@ class _PaginaState extends State<Pagina> {
                           return {'font-size': '8px'};
                         } else if (element.className.contains('fundo_verde')) {
                           return {
-                            'background-color': '#008979', // VerdePrimario
+                            'background-color': '#008979',
                             'color': 'white'
                           };
                         }
@@ -179,10 +178,9 @@ class _PaginaState extends State<Pagina> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Cores.PrimaryVerde, // Cor do texto
-                            padding: EdgeInsets.all(0.0), // Padding
-                            splashFactory:
-                                InkSplash.splashFactory, // Splash color
+                            backgroundColor: Cores.PrimaryVerde,
+                            padding: EdgeInsets.all(0.0),
+                            splashFactory: InkSplash.splashFactory,
                           ),
                           child: const Text(
                             'PDF',
@@ -191,8 +189,7 @@ class _PaginaState extends State<Pagina> {
                             ),
                           ),
                           onPressed: () {
-                            _launchURL(widget.p.linkPdf ??
-                                ''); // Garantir que linkPdf não seja nulo
+                            _launchURL(widget.p.linkPdf ?? '');
                             print(widget.p.linkPdf);
                           },
                         ),
@@ -203,10 +200,9 @@ class _PaginaState extends State<Pagina> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Color(0xfff008979), // Cor do texto
-                            padding: EdgeInsets.all(0.0), // Padding
-                            splashFactory:
-                                InkSplash.splashFactory, // Splash color
+                            backgroundColor: Color(0xfff008979),
+                            padding: EdgeInsets.all(0.0),
+                            splashFactory: InkSplash.splashFactory,
                           ),
                           child: const Text(
                             'eBook',
@@ -215,8 +211,7 @@ class _PaginaState extends State<Pagina> {
                             ),
                           ),
                           onPressed: () {
-                            _launchURL(widget.p.linkEbook ??
-                                ''); // Garantir que linkEbook não seja nulo
+                            _launchURL(widget.p.linkEbook ?? '');
                             print(widget.p.linkEbook);
                           },
                         ),

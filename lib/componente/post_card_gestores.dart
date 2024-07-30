@@ -1,11 +1,8 @@
 import 'package:conass/paginas/pagina_secretaria.dart';
-import 'package:conass/modelo/post.dart';
 import 'package:conass/modelo/post_secretarios.dart';
 import 'package:conass/util/cores.dart';
-import 'package:conass/util/push.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PostCardGestores extends StatelessWidget {
   final PostSecretarios post;

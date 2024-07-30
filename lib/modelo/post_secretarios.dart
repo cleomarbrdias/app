@@ -60,9 +60,10 @@ class PostSecretarios {
   factory PostSecretarios.fromJson(Map<String, dynamic> json) {
     //chamada para carregar os dados da imagem
 
-    final String resImg = (json["featured_media_url"] as String? ?? "").isEmpty
-        ? "https://www.conass.org.br/padraoMobile/padrao.png"
-        : json["featured_media_url"];
+    final String resImg =
+        (json["featured_media_details"]["url"] as String? ?? "").isEmpty
+            ? "https://www.conass.org.br/padraoMobile/padrao.png"
+            : json["featured_media_details"]["url"];
 
     String parseString(dynamic value) {
       if (value is String && value.isNotEmpty) {

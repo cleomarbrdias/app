@@ -14,20 +14,20 @@ PreferredSizeWidget BarraMenu(BuildContext context) {
     ),
     centerTitle: true,
     elevation: 0,
-    backgroundColor: Cores.PrimaryVerde,
+    //backgroundColor: Cores.PrimaryVerde,
     actions: <Widget>[
-      Align(
-        alignment: Alignment.center,
-        child: StreamBuilder<Map<String, Post>>(
-          stream: favoritoBloc.outFav,
-          builder: (context, snapshot) {
-            if (snapshot.hasData)
-              return Text("${snapshot.data!.length}");
-            else
-              return Container();
-          },
-        ),
-      ),
+      // Align(
+      //   alignment: Alignment.center,
+      //   child: StreamBuilder<Map<String, Post>>(
+      //     stream: favoritoBloc.outFav,
+      //     builder: (context, snapshot) {
+      //       if (snapshot.hasData)
+      //         return Text("${snapshot.data!.length}");
+      //       else
+      //         return Container();
+      //     },
+      //   ),
+      // ),
       // Outras ações do AppBar, como o ícone de pesquisa, podem ser adicionadas aqui.
     ],
   );

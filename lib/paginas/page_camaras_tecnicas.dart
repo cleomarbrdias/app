@@ -98,12 +98,13 @@ class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
                 Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'Câmaras Técnicas '.toUpperCase(),
+                    'Câmaras Técnicas ',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Cores.LaranjaClaro,
+                      fontFamily: 'GoogleSansMediumItalic',
+                      fontWeight: FontWeight.w600,
+                      color: Cores.LaranjaEscuro,
                     ),
                   ),
                 ),

@@ -7,12 +7,15 @@ class Pesquisa extends SearchDelegate<String> {
   @override
   String get searchFieldLabel => "Pesquisar";
 
+  @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
           query = "";
+          showSuggestions(
+              context); // Mostrar sugestões novamente após limpar o campo
         },
       )
     ];
@@ -24,29 +27,42 @@ class Pesquisa extends SearchDelegate<String> {
         icon: AnimatedIcon(
             icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
         onPressed: () {
-          close(context, 'null');
+          close(context, ""); // Retornar null em vez de uma string vazia
         });
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    Future.delayed(Duration.zero).then((_) => close(context, query));
-
-    return Container();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    if (query.isEmpty)
+    if (query.isEmpty) {
       return Center(
         child: Container(
           child: Padding(
             padding: const EdgeInsets.all(10),
+            child: Opacity(
+              opacity: 1.0, // Defina o nível de opacidade aqui (0.0 a 1.0)
+              child: Image.asset("images/estrela.png"),
+            ),
+          ),
+        ),
+      );
+    } else {
+      Future.delayed(Duration.zero).then((_) => close(context, query));
+      return Container();
+    }
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) {
+      return Center(
+        child: Container(
+          child: Opacity(
+            opacity: 0.5, // Defina o nível de opacidade aqui (0.0 a 1.0)
             child: Image.asset("images/estrela.png"),
           ),
         ),
       );
-    else
+    } else {
       return FutureBuilder<List>(
           future: suggestions(query),
           builder: (context, snapshot) {
@@ -80,11 +96,11 @@ class Pesquisa extends SearchDelegate<String> {
               );
             }
           });
+    }
   }
 
   Future<List> suggestions(String search) async {
-    //sugestoes de pesquisa realizada pelo API da Goggle
-
+    // Sugestões de pesquisa realizada pela API do Google
     Uri url = Uri.parse(
         "http://suggestqueries.google.com/complete/search?q=$search&client=chrome");
 

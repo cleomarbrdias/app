@@ -1,28 +1,23 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:conass/modelo/menu.dart';
-import 'package:conass/servicos/api_menu.dart';
+import 'package:conass/servicos/api_menu_biblioteca.dart';
 
-class MenuBloc with ChangeNotifier {
-  ApiMenu? menuServices;
+class MenuBlocBiblioteca with ChangeNotifier {
+  ApiMenuBiblioteca? menuServices;
   List<Menu>? menus = [];
 
-  /*
-  Criando Stream de saída
-   */
   final _postsController = StreamController<List<Menu>>.broadcast();
   Stream<List<Menu>> get outMenu => _postsController.stream;
 
-  /*
-  Criando Stream de entrada
-   */
   final _menuController = StreamController<String>.broadcast();
   Sink<String> get inMenu => _menuController.sink;
 
-  MenuBloc() {
+  MenuBlocBiblioteca() {
     print("Entrou no construtor do bloc menu");
-    menuServices = ApiMenu();
+    menuServices = ApiMenuBiblioteca();
     _menuController.stream.listen(_categoria);
+    initialize(); // Chama o método para inicializar os dados
   }
 
   void _categoria(String i) async {
@@ -33,6 +28,10 @@ class MenuBloc with ChangeNotifier {
     notifyListeners();
   }
 
+  void initialize() {
+    _categoria('initial');
+  }
+
   @override
   void dispose() {
     _postsController.close();
@@ -40,7 +39,6 @@ class MenuBloc with ChangeNotifier {
     super.dispose();
   }
 }
-
 
 
 // import 'dart:async';

@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'package:conass/bloc/menu_home_bloc.dart';
 import 'package:conass/componente/card_publicacao.dart';
-import 'package:conass/componente/menu_categoria.dart';
+import 'package:conass/componente/menu_categoria_biblioteca.dart';
 import 'package:conass/util/rodape.dart';
 import 'package:provider/provider.dart';
 import 'package:conass/bloc/biblioteca_bloc.dart';
@@ -11,6 +10,7 @@ import 'package:conass/util/cores.dart';
 import 'package:conass/util/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:conass/bloc/menu_bloc_biblioteca.dart';
 
 class PageBiblioteca extends StatefulWidget {
   PageBiblioteca({Key? key}) : super(key: key);
@@ -31,11 +31,10 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
         ConnectionStatusSingleton.getInstance();
     _connectionChangeStream =
         connectionStatus.connectionChange.listen(connectionChanged);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<MenuHomeBloc>(context, listen: false)
-          .fetchInitialData(); // Certifique-se de que o método seja chamado
 
-      // Não é necessário chamar fetchInitialData diretamente aqui
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<MenuBlocBiblioteca>(context, listen: false)
+          .initialize(); // Certifique-se de que o método seja chamado
     });
   }
 
@@ -49,7 +48,7 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<BibliotecaBloc>(context);
-    print("Pagina Biblioteca");
+
     return Scaffold(
       appBar: BarraMenu(context),
       drawer: MenuList(),
@@ -61,16 +60,15 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
             child: Text(
               'Biblioteca',
               style: TextStyle(
-                color: Cores
-                    .LaranjaEscuro, // Certifique-se de que a cor esteja definida em Cores
+                color: Cores.LaranjaEscuro,
                 fontFamily: 'GoogleSansItalic',
-                fontSize: 24, // Ajuste o tamanho conforme necessário
+                fontSize: 24,
               ),
             ),
           ),
           Row(
             children: <Widget>[
-              MenuCategoria(),
+              MenuCategoriaBiblioteca(),
             ],
           ),
           Expanded(
@@ -100,13 +98,11 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
-                      childAspectRatio:
-                          2.5, // Ajuste de acordo com a proporção do card
+                      childAspectRatio: 2.5,
                     ),
                     itemCount: (snapshot.data as List).length,
                     itemBuilder: (context, index) {
-                      return CardPublicacao(snapshot.data![
-                          index]); // Usando a notação ! para garantir que snapshot.data não seja nulo
+                      return CardPublicacao(snapshot.data![index]);
                     },
                   );
                 }

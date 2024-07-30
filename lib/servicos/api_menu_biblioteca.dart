@@ -3,7 +3,7 @@ import 'package:conass/modelo/menu.dart';
 import 'package:conass/util/util.dart';
 import 'package:http/http.dart' as http;
 
-class ApiMenu {
+class ApiMenuBiblioteca {
   Future<List<Menu>> getMenu() async {
     try {
       Uri url = Uri.parse(
