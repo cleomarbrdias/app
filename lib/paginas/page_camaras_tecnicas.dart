@@ -9,6 +9,7 @@ import 'package:conass/util/menu.dart';
 import 'package:conass/util/rodape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PageCamarasTecnicas extends StatefulWidget {
   PageCamarasTecnicas({Key? key}) : super(key: key);
@@ -17,9 +18,7 @@ class PageCamarasTecnicas extends StatefulWidget {
 }
 
 class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
-  // ignore: unused_field, cancel_subscriptions
   StreamSubscription? _connectionChangeStream;
-
   bool isOffline = false;
 
   @override
@@ -85,11 +84,7 @@ class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
               ),
             );
           } else if (!snapshot.hasData || snapshot.data!.length == 0) {
-            return Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Cores.LaranjaEscuro),
-              ),
-            );
+            return _buildShimmerEffect();
           } else if (snapshot.hasData) {
             print(snapshot.data);
 
@@ -128,7 +123,34 @@ class _PageCamarasTecnicasState extends State<PageCamarasTecnicas> {
       ),
     );
   }
+
+  Widget _buildShimmerEffect() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: ListView.builder(
+        itemCount: 5, // Número de itens de carregamento falso
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              height: 100.0,
+              color: Colors.white,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _connectionChangeStream?.cancel();
+    super.dispose();
+  }
 }
+
 
 
 // import 'dart:async';

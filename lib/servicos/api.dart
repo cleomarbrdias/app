@@ -33,8 +33,8 @@ class Api {
           "https://www.conass.org.br/wp-json/wp/v2/posts?categories=6&per_page=20&orderby=date&order=desc");
       http.Response response = await http.get(url);
 
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
+      // print("Response status: ${response.statusCode}");
+      // print("Response body: ${response.body}");
 
       return decode(response);
     } catch (error) {
@@ -61,7 +61,7 @@ class Api {
 
   Future<List<Post>> nextPage() async {
     _page++;
-
+    print('Pagina => $_page');
     try {
       var connectivityResult = await Connectivity().checkConnectivity();
       if (connectivityResult == ConnectivityResult.none) {
@@ -70,6 +70,10 @@ class Api {
 
       http.Response response = await http.get(Uri.parse(
           "https://www.conass.org.br/wp-json/wp/v2/posts?categories=$_categoria&page=$_page"));
+
+      if (response.statusCode == 400) {
+        return [];
+      }
       return decode(response);
     } catch (error) {
       throw Exception("Erro na próxima página: $error");
@@ -97,6 +101,10 @@ class Api {
 
       http.Response response = await http.get(Uri.parse(
           "https://www.conass.org.br/wp-json/wp/v2/posts?search=$_pesquisa&page=$_page"));
+
+      if (response.statusCode == 400) {
+        return [];
+      }
       return decode(response);
     } catch (error) {
       print("Erro na próxima página da busca: $error");
@@ -119,7 +127,7 @@ class Api {
       throw Exception("Erro 404: ${Util.erro}");
     } else if (response.statusCode == 400) {
       Util.erro = "FIM";
-      throw Exception("Erro 400: ${Util.erro}");
+      return [];
     } else {
       Util.erro = "Ocorreu um erro ao processar sua solicitação";
       throw Exception("Erro desconhecido: ${Util.erro}");

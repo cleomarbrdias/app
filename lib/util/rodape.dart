@@ -17,6 +17,15 @@ class Rodape extends StatefulWidget {
 class _RodapeState extends State<Rodape> {
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final favoritoBloc = Provider.of<FavoritoBloc>(context, listen: false);
+      favoritoBloc.loadFav();
+    });
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -60,30 +69,37 @@ class _RodapeState extends State<Rodape> {
               StreamBuilder<Map<String, Post>>(
                 stream: favoritoBloc.outFav,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                    return Positioned(
-                      right: 0,
-                      child: Container(
-                        padding: EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          color: Cores.LaranjaEscuro,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        constraints: BoxConstraints(
-                          minWidth: 14,
-                          minHeight: 14,
-                        ),
-                        child: Text(
-                          '${snapshot.data!.length}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 8,
+                  print("Snapshot data: ${snapshot.data}");
+                  if (snapshot.hasData) {
+                    if (snapshot.data!.isNotEmpty) {
+                      return Positioned(
+                        right: 0,
+                        child: Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            color: Cores.LaranjaEscuro,
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                          textAlign: TextAlign.center,
+                          constraints: BoxConstraints(
+                            minWidth: 14,
+                            minHeight: 14,
+                          ),
+                          child: Text(
+                            '${snapshot.data!.length}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      print("Entrou aqui 1 - Snapshot está vazio");
+                      return SizedBox.shrink();
+                    }
                   } else {
+                    print("Entrou aqui 2 - Snapshot não tem dados");
                     return SizedBox.shrink();
                   }
                 },

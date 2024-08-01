@@ -20,6 +20,8 @@ class PageCamaraTecnica extends StatefulWidget {
 }
 
 class _PageCamaraTecnicaState extends State<PageCamaraTecnica> {
+  double fsize = 16.0;
+  double fConteudo = 12.0;
   @override
   void initState() {
     super.initState();
@@ -115,11 +117,31 @@ class _PageCamaraTecnicaState extends State<PageCamaraTecnica> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: HtmlWidget(
-                      widget.post.apresentacao,
-                      textStyle: TextStyle(
-                        fontFamily: 'GoogleSans',
-                        fontSize: 13.0,
+                    child: SingleChildScrollView(
+                      child: HtmlWidget(
+                        '''
+          <div style="text-align: left;">
+            ${widget.post.apresentacao}
+          </div>
+          ''',
+                        customStylesBuilder: (element) {
+                          if (element.localName == 'figcaption') {
+                            return {'font-size': '8px'};
+                          } else if (element.className
+                              .contains('fundo_verde')) {
+                            return {
+                              'background-color': '#008979',
+                              'color': 'white'
+                            };
+                          }
+                          return null;
+                        },
+                        textStyle: TextStyle(
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          color: Cores.FonteConteudo,
+                          fontSize: fConteudo,
+                        ),
                       ),
                     ),
                   ),
@@ -145,8 +167,7 @@ class _PageCamaraTecnicaState extends State<PageCamaraTecnica> {
                           child: Text("Nenhuma publicação encontrada"),
                         );
                       } else {
-                        return Container(
-                          height: 400, // Altura fixa para as publicações
+                        return Expanded(
                           child: GridView.builder(
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(

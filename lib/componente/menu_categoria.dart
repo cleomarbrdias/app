@@ -6,6 +6,7 @@ import 'package:conass/paginas/home_page.dart';
 import 'package:conass/util/cores.dart';
 import 'package:conass/util/util.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MenuCategoria extends StatelessWidget {
   @override
@@ -25,9 +26,26 @@ class MenuCategoria extends StatelessWidget {
               child: Text("Erro ao carregar menu"),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Cores.PrimaryVerde),
+            return Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 5, // Número de itens de carregamento falso
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: Container(
+                      width: screenWidth * 0.25,
+                      height: screenWidth * 0.1,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                  );
+                },
               ),
             );
           } else {

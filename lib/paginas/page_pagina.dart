@@ -5,6 +5,7 @@ import 'package:conass/util/barra_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:conass/bloc/pagina_bloc.dart';
 import 'package:conass/util/util.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PagePagina extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -39,11 +40,7 @@ class PagePagina extends StatelessWidget {
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             print("Snapshot está aguardando dados");
-            return Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xff008979)),
-              ),
-            );
+            return _buildShimmerEffect();
           } else if (snapshot.hasData) {
             print("Dados do snapshot: ${snapshot.data}");
             final pagina = snapshot.data!;
@@ -60,9 +57,27 @@ class PagePagina extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildShimmerEffect() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: ListView.builder(
+        itemCount: 5, // Número de itens de carregamento falso
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              height: 100.0,
+              color: Colors.white,
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
-
-
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // import 'package:bloc_pattern/bloc_pattern.dart';

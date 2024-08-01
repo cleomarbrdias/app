@@ -11,6 +11,7 @@ import 'package:conass/util/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:conass/bloc/menu_bloc_biblioteca.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PageBiblioteca extends StatefulWidget {
   PageBiblioteca({Key? key}) : super(key: key);
@@ -88,12 +89,7 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
                 } else if (!snapshot.hasData ||
                     snapshot.data == null ||
                     (snapshot.data as List).isEmpty) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Cores.PrimaryVerde),
-                    ),
-                  );
+                  return _buildShimmerEffect();
                 } else {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -110,6 +106,30 @@ class _PageBibliotecaState extends State<PageBiblioteca> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildShimmerEffect() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          childAspectRatio: 2.5,
+        ),
+        itemCount: 5, // Número de itens de carregamento falso
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              height: 100.0,
+              color: Colors.white,
+            ),
+          );
+        },
       ),
     );
   }

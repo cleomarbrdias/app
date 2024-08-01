@@ -89,6 +89,17 @@ class CardPublicacao extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 10),
+                    if (post.isbn != null && post.isbn!.isNotEmpty)
+                      Text(
+                        'ISBN | ${post.isbn}',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black45,
+                          fontSize: 9.0,
+                          fontFamily: 'GoogleSansItalic',
+                        ),
+                      ),
+                    SizedBox(height: 10),
                     Text(
                       'Publicado em | $resData',
                       overflow: TextOverflow.ellipsis,

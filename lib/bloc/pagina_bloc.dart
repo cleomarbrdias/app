@@ -20,13 +20,11 @@ class PaginaBloc with ChangeNotifier {
 
   void _page(int p) async {
     try {
-      print("Solicitando página $p");
       ModeloPagina pagi = await api.getPagina(p);
-      print("Página recebida: $pagi");
+
       _pageController.sink.add(pagi);
       notifyListeners();
     } catch (e) {
-      print("Erro ao carregar a página: $e");
       _pageController.sink.addError(Util.erro);
       notifyListeners();
     }

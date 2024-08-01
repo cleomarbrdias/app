@@ -11,16 +11,20 @@ class FavoritoBloc with ChangeNotifier {
   Stream<Map<String, Post>> get outFav => _favController.stream;
 
   FavoritoBloc() {
-    _loadFav();
+    loadFav(); // Certifique-se de carregar os favoritos na inicialização
   }
 
   void toggleFavorite(Post post) {
-    if (_favoritos.containsKey(post.id)) {
-      _favoritos.remove(post.id);
+    final postIdStr = post.id;
+    if (_favoritos.containsKey(postIdStr)) {
+      _favoritos.remove(postIdStr);
+      print("Favorito removido: $postIdStr");
     } else {
-      _favoritos[post.id] = post;
+      _favoritos[postIdStr] = post;
+      print("Favorito adicionado: $postIdStr");
     }
 
+    print("Total de favoritos: ${_favoritos.length}");
     _favController.sink.add(_favoritos);
     _saveFav();
     notifyListeners();
@@ -30,20 +34,37 @@ class FavoritoBloc with ChangeNotifier {
     return _favoritos.containsKey(post.id);
   }
 
-  Future<void> _loadFav() async {
+  Future<void> loadFav() async {
+    print("Carregando favoritos...");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getKeys().contains("favoritos")) {
-      _favoritos =
-          json.decode(prefs.getString("favoritos").toString()).map((k, v) {
-        return MapEntry(k, Post.fromJson(v));
-      }).cast<String, Post>();
+      final favString = prefs.getString("favoritos") ?? "{}";
+      final favMap = json.decode(favString) as Map<String, dynamic>;
+
+      try {
+        _favoritos = favMap.map((key, value) {
+          return MapEntry(key, Post.fromJson(value));
+        });
+        print("Favoritos carregados: ${_favoritos.length}");
+      } catch (e) {
+        print("Erro ao carregar favoritos: $e");
+      }
+
       _favController.add(_favoritos);
+    } else {
+      _favController.add({});
     }
+    notifyListeners(); // Adicionado para garantir que a interface seja atualizada
   }
 
   void _saveFav() {
+    print("Salvando favoritos...");
     SharedPreferences.getInstance().then((prefs) {
-      prefs.setString("favoritos", json.encode(_favoritos));
+      final favString = json.encode(_favoritos.map((key, value) {
+        return MapEntry(key, value.toJson());
+      }));
+      prefs.setString("favoritos", favString);
+      print("Favoritos salvos: ${_favoritos.length}");
     });
   }
 

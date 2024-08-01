@@ -9,6 +9,7 @@ import 'package:conass/util/connectionStatusSingleton.dart';
 import 'package:conass/util/cores.dart';
 import 'package:conass/util/util.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomePesquisa extends StatefulWidget {
   final String result;
@@ -107,12 +108,7 @@ class _HomePesquisaState extends State<HomePesquisa> {
                     ),
                   );
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(0xff008979)),
-                    ),
-                  );
+                  return _buildShimmerEffect();
                 } else {
                   Util.paginacao = snapshot.data!.length % 10;
                   return ListView.builder(
@@ -125,10 +121,7 @@ class _HomePesquisaState extends State<HomePesquisa> {
                           height: 40,
                           width: 40,
                           alignment: Alignment.center,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Cores.LaranjaEscuro),
-                          ),
+                          child: _buildShimmerEffect(),
                         );
                       } else {
                         // Não exibir "erro" quando há apenas um item
@@ -142,6 +135,26 @@ class _HomePesquisaState extends State<HomePesquisa> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildShimmerEffect() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: ListView.builder(
+        itemCount: 5, // Número de itens de carregamento falso
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              height: 100.0,
+              color: Colors.white,
+            ),
+          );
+        },
       ),
     );
   }

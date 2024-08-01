@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:conass/componente/new_post_card_p.dart';
 import 'package:conass/modelo/post.dart';
+import 'package:conass/paginas/home_page.dart';
 import 'package:conass/util/menu.dart';
+import 'package:conass/util/push.dart';
+import 'package:conass/util/sem_conexao.dart';
 import 'package:provider/provider.dart';
 import 'package:conass/bloc/bloc_post_destaque.dart';
 import 'package:conass/bloc/bloc_post_mais_noticias.dart';
@@ -15,6 +18,7 @@ import 'package:conass/util/cores.dart';
 import 'package:conass/util/rodape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NewHome extends StatefulWidget {
   NewHome({Key? key}) : super(key: key);
@@ -25,6 +29,7 @@ class NewHome extends StatefulWidget {
 class _NewHomeState extends State<NewHome> {
   StreamSubscription? _connectionChangeStream;
   bool isOffline = false;
+  bool _isInitialized = false;
 
   @override
   void initState() {
@@ -35,14 +40,17 @@ class _NewHomeState extends State<NewHome> {
         connectionStatus.connectionChange.listen(connectionChanged);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<BlocPostDestaque>(context, listen: false).loadPosts.add(null);
-      Provider.of<BlocPostMaisNoticias>(context, listen: false)
-          .loadPosts
-          .add(null);
-      Provider.of<MenuHomeBloc>(context, listen: false)
-          .fetchInitialData(); // Certifique-se de que o método seja chamado
-
-      print("Frame callback chamado");
+      if (!_isInitialized) {
+        Provider.of<BlocPostDestaque>(context, listen: false)
+            .loadPosts
+            .add(null);
+        Provider.of<BlocPostMaisNoticias>(context, listen: false)
+            .loadPosts
+            .add(null);
+        Provider.of<MenuHomeBloc>(context, listen: false).fetchInitialData();
+        _isInitialized = true;
+        print("Frame callback chamado");
+      }
     });
   }
 
@@ -101,24 +109,33 @@ class _NewHomeState extends State<NewHome> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      height: screenHeight * 0.3, // Ajuste proporcional à altura da tela
+      height: screenHeight * 0.3,
       child: StreamBuilder<List<Post>>(
         stream: bloc.outPosts,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Container(
-              padding: EdgeInsets.all(10),
-              child: Center(
-                child: Text(
-                  snapshot.error.toString(),
-                  style: TextStyle(fontSize: 20, color: Colors.grey),
-                ),
-              ),
+            return SemConexao(
+              message:
+                  "Erro ao carregar as notícias, tente novamente mais tarde.",
+              onRetry: () {
+                pushReplacement(context, NewHome());
+              },
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Cores.LaranjaEscuro),
+            return Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: screenWidth * 0.8,
+                    margin:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+                    color: Colors.white,
+                  );
+                },
               ),
             );
           } else {
@@ -127,7 +144,7 @@ class _NewHomeState extends State<NewHome> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return Container(
-                  width: screenWidth * 0.8, // Largura proporcional à tela
+                  width: screenWidth * 0.8,
                   margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
                   child: NewPostCardP(snapshot.data![index]),
                 );
@@ -139,6 +156,61 @@ class _NewHomeState extends State<NewHome> {
     );
   }
 
+  // Widget _buildPostRowNoticias(BuildContext context) {
+  //   final bloc = Provider.of<BlocPostDestaque>(context);
+  //   double screenHeight = MediaQuery.of(context).size.height;
+  //   double screenWidth = MediaQuery.of(context).size.width;
+
+  //   return Container(
+  //     height: screenHeight * 0.3, // Ajuste proporcional à altura da tela
+  //     child: StreamBuilder<List<Post>>(
+  //       stream: bloc.outPosts,
+  //       builder: (context, snapshot) {
+  //         if (snapshot.hasError) {
+  //           return Container(
+  //             padding: EdgeInsets.all(10),
+  //             child: Center(
+  //               child: Text(
+  //                 snapshot.error.toString(),
+  //                 style: TextStyle(fontSize: 20, color: Colors.grey),
+  //               ),
+  //             ),
+  //           );
+  //         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+  //           return Shimmer.fromColors(
+  //             baseColor: Colors.grey[300]!,
+  //             highlightColor: Colors.grey[100]!,
+  //             child: ListView.builder(
+  //               scrollDirection: Axis.horizontal,
+  //               itemCount: 3, // Número de itens de carregamento falso
+  //               itemBuilder: (context, index) {
+  //                 return Container(
+  //                   width: screenWidth * 0.8,
+  //                   margin:
+  //                       EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+  //                   color: Colors.white,
+  //                 );
+  //               },
+  //             ),
+  //           );
+  //         } else {
+  //           return ListView.builder(
+  //             scrollDirection: Axis.horizontal,
+  //             itemCount: snapshot.data!.length,
+  //             itemBuilder: (context, index) {
+  //               return Container(
+  //                 width: screenWidth * 0.8, // Largura proporcional à tela
+  //                 margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+  //                 child: NewPostCardP(snapshot.data![index]),
+  //               );
+  //             },
+  //           );
+  //         }
+  //       },
+  //     ),
+  //   );
+  // }
+
   Widget _buildMaisNoticias(BuildContext context) {
     final bloc = Provider.of<BlocPostMaisNoticias>(context);
     double screenWidth = MediaQuery.of(context).size.width;
@@ -147,18 +219,30 @@ class _NewHomeState extends State<NewHome> {
       stream: bloc.outPosts,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Container(
-            padding: EdgeInsets.all(10),
-            child: Center(
-              child: Text(
-                snapshot.error.toString(),
-                style: TextStyle(fontSize: 20, color: Colors.grey),
+          return SemConexao(
+            message:
+                "Erro ao carregar as notícias, tente novamente mais tarde.",
+            onRetry: () {
+              pushReplacement(context, NewHome());
+            },
+          );
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Column(
+              children: List.generate(
+                3, // Número de itens de carregamento falso
+                (index) => Container(
+                  width: screenWidth * 0.9,
+                  height:
+                      100, // Altura de exemplo para os itens de carregamento
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  color: Colors.white,
+                ),
               ),
             ),
           );
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          print("Valor nulo");
-          return Container();
         } else {
           print("Chama mais noticias");
           return MaisNoticias(posts: snapshot.data ?? []);
