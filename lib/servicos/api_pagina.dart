@@ -1,10 +1,6 @@
 import 'dart:convert';
 import 'package:conass/modelo/modelo_pagina.dart';
 import 'package:conass/util/util.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiPagina {

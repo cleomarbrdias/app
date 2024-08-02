@@ -1,9 +1,9 @@
-import 'package:conass/bloc/text_size_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:conass/modelo/post.dart';
+import 'package:conass/servicos/api_get_id.dart';
 import 'package:conass/util/barra_menu.dart';
 import 'package:conass/util/cores.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +22,9 @@ class Pagina extends StatefulWidget {
 }
 
 class _PaginaState extends State<Pagina> {
+  double fsize = 16.0;
+  double fConteudo = 12.0;
+
   @override
   Widget build(BuildContext context) {
     var dt = DateTime.parse(widget.p.data ?? DateTime.now().toIso8601String());
@@ -29,10 +32,7 @@ class _PaginaState extends State<Pagina> {
     String resData = forData.format(dt);
 
     final favoritoBloc = Provider.of<FavoritoBloc>(context);
-    final textSizeProvider = Provider.of<TextSizeProvider>(context);
     bool isFavorited = favoritoBloc.isFavorited(widget.p);
-
-    print(widget.p.name_descritores);
 
     return Scaffold(
       appBar: BarraMenu(context),
@@ -52,7 +52,7 @@ class _PaginaState extends State<Pagina> {
                         fontFamily: 'GoogleSansMediumItalic',
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.italic,
-                        fontSize: textSizeProvider.sizeTitle,
+                        fontSize: 18,
                         letterSpacing: 0.5,
                         height: 1.2,
                         color: Cores.LaranjaTitulo,
@@ -95,7 +95,7 @@ class _PaginaState extends State<Pagina> {
                     style: TextStyle(
                       fontFamily: 'GoogleSansMediumItalic',
                       color: Cores.FonteConteudo,
-                      fontSize: textSizeProvider.sizePublicado,
+                      fontSize: 10,
                     ),
                   ),
                 ],
@@ -151,7 +151,7 @@ class _PaginaState extends State<Pagina> {
                       customStylesBuilder: (element) {
                         if (element.localName == 'figcaption') {
                           return {'font-size': '8px'};
-                        } else if (element.id.contains('fundo_verde')) {
+                        } else if (element.className.contains('fundo_verde')) {
                           return {
                             'background-color': '#008979',
                             'color': 'white'
@@ -163,7 +163,7 @@ class _PaginaState extends State<Pagina> {
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w400,
                         color: Cores.FonteConteudo,
-                        fontSize: textSizeProvider.sizeConteudo,
+                        fontSize: fConteudo,
                       ),
                     ),
                   ),
@@ -190,6 +190,7 @@ class _PaginaState extends State<Pagina> {
                           ),
                           onPressed: () {
                             _launchURL(widget.p.linkPdf ?? '');
+                            print(widget.p.linkPdf);
                           },
                         ),
                       )
@@ -211,6 +212,7 @@ class _PaginaState extends State<Pagina> {
                           ),
                           onPressed: () {
                             _launchURL(widget.p.linkEbook ?? '');
+                            print(widget.p.linkEbook);
                           },
                         ),
                       )
@@ -220,29 +222,6 @@ class _PaginaState extends State<Pagina> {
             SizedBox(height: 70),
           ],
         ),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          new FloatingActionButton(
-            mini: true,
-            heroTag: "btn1",
-            child: Text("A+"),
-            backgroundColor: Cores.LaranjaEscuro.withOpacity(0.7),
-            onPressed: textSizeProvider.increaseTextSize,
-          ),
-          SizedBox(
-            width: 8,
-            height: 8,
-          ),
-          new FloatingActionButton(
-            mini: true,
-            heroTag: "btn2",
-            child: Text("A-"),
-            backgroundColor: Cores.LaranjaClaro.withOpacity(0.7),
-            onPressed: textSizeProvider.decreaseTextSize,
-          )
-        ],
       ),
     );
   }

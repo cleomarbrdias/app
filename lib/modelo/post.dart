@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class Post {
@@ -101,13 +102,11 @@ class Post {
             ? List<String>.from(json["meta"]["name_descritores"])
             : [];
 
-    // Parsing arquivos
-    List<Arquivo> arquivos = [];
-    if (json["meta"]["name_arquivos"] != null) {
-      arquivos = List<Map<String, dynamic>>.from(json["meta"]["name_arquivos"])
-          .map((e) => Arquivo.fromJson(e))
-          .toList();
-    }
+    // final List<Arquivo> arquivos = (json['name_arquivos'] != null)
+    //     ? json['name_arquivos']
+    //         .map<Arquivo>((e) => Arquivo.fromJson(e))
+    //         .toList()
+    //     : null;
 
     return Post(
       id: json["id"].toString(),
@@ -124,7 +123,11 @@ class Post {
       name_descritores: name_descritores,
       isbn: json["meta"]["isbn"] ?? '',
       doi: json["meta"]["doi"] ?? '',
-      arquivos: arquivos, // Adicionando a nova propriedade arquivos
+      arquivos: (json['name_arquivos'] != null)
+          ? json['name_arquivos']
+              .map<Arquivo>((e) => Arquivo.fromJson(e))
+              .toList()
+          : null,
     );
   }
 
@@ -145,9 +148,7 @@ class Post {
       "name_descritores": name_descritores,
       "isbn": isbn,
       "doi": doi,
-      "arquivos": arquivos
-          ?.map((e) => e.toJson())
-          .toList(), // Adicionando a nova propriedade arquivos
+      "arquivos": arquivos,
     };
   }
 }
@@ -163,8 +164,8 @@ class Arquivo {
 
   factory Arquivo.fromJson(Map<String, dynamic> json) {
     return Arquivo(
-      nomeDoArquivo: json['name_arquivos']['nome-do-arquivo'] as String?,
-      arquivo: json['name_arquivos']['_arquivo'] as String?,
+      nomeDoArquivo: json['nome-do-arquivo'] as String?,
+      arquivo: json['_arquivo'] as String?,
     );
   }
 
