@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TextSizeProvider with ChangeNotifier {
   double _sizeTitle = 16.0;
   double _sizeConteudo = 12.0;
-  double _sizePublicado = 9.0;
+  double _sizePublicado = 8.0;
 
   final double _minSizeTitle = 16.0;
   final double _maxSizeTitle = 24.0;
@@ -11,7 +11,7 @@ class TextSizeProvider with ChangeNotifier {
   final double _minSizeConteudo = 12.0;
   final double _maxSizeConteudo = 20.0;
 
-  final double _minSizePublicado = 9.0;
+  final double _minSizePublicado = 8.0;
   final double _maxSizePublicado = 14.0;
 
   double get sizeTitle => _sizeTitle;

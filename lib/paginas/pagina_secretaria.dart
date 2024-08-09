@@ -139,7 +139,7 @@ class _PaginaSecretariaState extends State<PaginaSecretaria> {
                         height: 30,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Cores.LaranjaAmrelado,
+                            backgroundColor: Cores.LaranjaEscuro,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),

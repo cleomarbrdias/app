@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:conass/componente/new_post_card_p.dart';
 import 'package:conass/modelo/post.dart';
-import 'package:conass/paginas/home_page.dart';
 import 'package:conass/util/menu.dart';
 import 'package:conass/util/push.dart';
 import 'package:conass/util/sem_conexao.dart';

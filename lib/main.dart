@@ -1,3 +1,4 @@
+import 'package:conass/bloc/auth_provider.dart';
 import 'package:conass/bloc/text_size_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,6 +54,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BlocMenuEstados()),
         ChangeNotifierProvider(create: (_) => BlocAgendaCit()),
         ChangeNotifierProvider(create: (_) => TextSizeProvider()),
+        // Adicionando AuthProvider
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,
